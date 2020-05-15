@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.U2D;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -44,10 +45,12 @@ public class GameManager : MonoBehaviour
         
     }
 
-    void AddTile(GameObject tile,int x,int y, float height)
+    void AddTile(GameObject tile,int x,int y, float height,int orientation)
     {
-        Vector3 pos = new Vector3(x*TileRadius*HexDisplace, height,y*TileRadius + (x%2)*TileRadius*0.5f);
-        Instantiate(tile,pos,Quaternion.identity);
+        float angle = (float)(orientation % 6) * 60f;
+        Quaternion ori = Quaternion.AngleAxis(angle, Vector3.up);
+        Vector3 pos = new Vector3(x * TileRadius * HexDisplace, height, (y * TileRadius) + (x % 2) * TileRadius * 0.5f);
+        Instantiate(tile,pos,ori);
 
     }
 
@@ -113,7 +116,7 @@ public class GameManager : MonoBehaviour
                 }
 
 
-                AddTile(tile, x-map.width/2, y-map.height/2, pixel * TileMaxHeight);
+                AddTile(tile, x-map.width/2, y-map.height/2, pixel * TileMaxHeight, Random.Range(0, 5));
             }
         }
 
