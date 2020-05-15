@@ -29,9 +29,9 @@ public class GameManager : MonoBehaviour
 
 
 
-    private float HexDisplace =(float)Math.Sqrt(3)*0.5f;
-    private float TileRadius = 10f;
-    private float TileMaxHeight = 10f;
+    public readonly float HexDisplace =(float)Math.Sqrt(3)*0.5f;
+    public float TileRadius = 10f;
+    public float TileMaxHeight = 10f;
 
     // Start is called before the first frame update
     void Start()

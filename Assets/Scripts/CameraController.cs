@@ -19,6 +19,7 @@ public class CameraController : MonoBehaviour
     public float maxY;
     public float minZ;
     public float maxZ;
+    public GameManager GM;
 
 
     public Vector3 newPosition;
@@ -35,13 +36,17 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        minX = -0.5f * GM.HeightMap.width * GM.TileRadius*GM.HexDisplace;
+        maxX = 0.5f * GM.HeightMap.width * GM.TileRadius*GM.HexDisplace;
+        minZ = -0.5f * GM.HeightMap.height * GM.TileRadius;
+        maxZ = 0.5f * GM.HeightMap.height * GM.TileRadius;
         newPosition = transform.position;
         newRotation = transform.rotation;
         newZoom = cameraTransform.localPosition;
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         HandleMouseInput();
         HandleMovementInput();
