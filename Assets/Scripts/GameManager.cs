@@ -8,6 +8,8 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
+    //Tiles for Map Generation, B,M and T stand for Bottom, Middle and Top.
+    //Top and Bottom Tiles will be used at the border between Tiles to smooth over Biome edges.
     public GameObject OceanTile;
     public GameObject BSandTile;
     public GameObject MSandTile;
@@ -24,12 +26,15 @@ public class GameManager : MonoBehaviour
     public GameObject BMountainTile;
     public GameObject MMountainTile;
     public GameObject TMountainTile;
-
+    //This is your Terrain Map, it'll be used to load the Terrain.
+    //the generator and other scripts will look up the size of your map, scaling your playfield and number of tiles
     public Texture2D HeightMap;
 
 
-
+    //constant to help with Hex Geometry. 
+    //Is used to figure out spacing in the corner direction of the Hex tile.
     public readonly float HexDisplace =(float)Math.Sqrt(3)*0.5f;
+    //Variables to tell the generator the dimensions and the displacement range of the Tiles
     public float TileRadius = 10f;
     public float TileMaxHeight = 10f;
 
@@ -45,6 +50,8 @@ public class GameManager : MonoBehaviour
         
     }
 
+    //This script Loads a single Tile at Position x,y (on the Hexgrid) and height(ingame Coordinates)
+    //additionally, it can rotate them by 60° Increments
     void AddTile(GameObject tile,int x,int y, float height,int orientation)
     {
         float angle = (float)(orientation % 6) * 60f;
@@ -54,12 +61,14 @@ public class GameManager : MonoBehaviour
 
     }
 
+    //loads the playfield from the Heightmap
     void loadMap(Texture2D map)
     {
         for (int x = 0; x < map.width; x++)
         {
             for (int y = 0; y < map.height; y++)
             {
+                //This section determines which Tile to use by its height
                 float pixel = map.GetPixel(x, y).maxColorComponent;
                 GameObject tile;
                 switch(pixel)
@@ -114,8 +123,7 @@ public class GameManager : MonoBehaviour
                         tile = OceanTile;
                         break;
                 }
-
-
+                //once a Tile has been chosen, it is placed at the correct x,y coordinates, at the given height, and a random facing of the Tile is picked to vary the look of the landscape.
                 AddTile(tile, x-map.width/2, y-map.height/2, pixel * TileMaxHeight, Random.Range(0, 5));
             }
         }
