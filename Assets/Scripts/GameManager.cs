@@ -100,9 +100,8 @@ public class GameManager : MonoBehaviour
                         break;
                 }
                 //once a Tile has been chosen, the Tile Object is noted in the _tileMap
-                _tileMap[x, y] = tile.Tile;
                 //afterwards, it is placed at the correct x,y coordinates, at the given height, and a random facing of the Tile is picked to vary the look of the landscape.
-                AddTile(tile, x - map.width / 2, y - map.height / 2, pixel * TileMaxHeight, Random.Range(0, 5));
+                _tileMap[x, y] = AddTile(tile, x - map.width / 2, y - map.height / 2, pixel * TileMaxHeight, Random.Range(0, 5));
             }
         }
 
@@ -110,13 +109,14 @@ public class GameManager : MonoBehaviour
     }
     //This script Loads a single Tile at Position x,y (on the Hexgrid) and height(ingame Coordinates)
     //additionally, it can rotate them by 60° Increments
-    void AddTile(GameObject tile, int x, int y, float height, int orientation)
+    Tile AddTile(GameObject tile, int x, int y, float height, int orientation)
     {
         float angle = (float)(orientation % 6) * 60f;
         Quaternion ori = Quaternion.AngleAxis(angle, Vector3.up);
         Vector3 pos = new Vector3(x * TileRadius * HexDisplace, height, (y * TileRadius) + (x % 2) * TileRadius * 0.5f);
         Instantiate(tile, pos, ori);
-
+        Tile t = tile.GetComponent<Tile>();
+        return t;
     }
     #endregion
 
