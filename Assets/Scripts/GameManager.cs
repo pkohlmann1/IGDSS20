@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Tilemaps;
 using UnityEngine.U2D;
 using Random = UnityEngine.Random;
@@ -39,83 +42,114 @@ public class GameManager : MonoBehaviour
     //loads the playfield from the Heightmap, initializes the _tileMap
     void loadMap(Texture2D map)
     {
-        _tileMap = new Tile[map.width,map.height];
-        for (int x = 0; x < map.width; x++)
-        {
-            for (int y = 0; y < map.height; y++)
-            {
-                //This section determines which Tile to use by its height
-                float pixel = map.GetPixel(x, y).maxColorComponent;
-                GameObject tile;
-                switch (pixel)
-                {
-                    case float p when p > 0.95:
-                        tile = TMountainTile;
-                        break;
-                    case float p when p > 0.85:
-                        tile = MMountainTile;
-                        break;
-                    case float p when p > 0.8:
-                        tile = BMountainTile;
-                        break;
-                    case float p when p > 0.75:
-                        tile = TStoneTile;
-                        break;
-                    case float p when p > 0.65:
-                        tile = MStoneTile;
-                        break;
-                    case float p when p > 0.6:
-                        tile = BStoneTile;
-                        break;
-                    case float p when p > 0.55:
-                        tile = TForestTile;
-                        break;
-                    case float p when p > 0.45:
-                        tile = MForestTile;
-                        break;
-                    case float p when p > 0.4:
-                        tile = BForestTile;
-                        break;
-                    case float p when p > 0.35:
-                        tile = TGrassTile;
-                        break;
-                    case float p when p > 0.25:
-                        tile = MGrassTile;
-                        break;
-                    case float p when p > 0.2:
-                        tile = BGrassTile;
-                        break;
-                    case float p when p > 0.15:
-                        tile = TSandTile;
-                        break;
-                    case float p when p > 0.05:
-                        tile = MSandTile;
-                        break;
-                    case float p when p > 0.0:
-                        tile = BSandTile;
-                        break;
+        //first pass to load tiles
+        _tileMap = new Tile[map.width, map.height];
+        int xCenter = map.width / 2;
+        int yCenter = map.height / 2;
 
-                    default:
-                        tile = OceanTile;
-                        break;
-                }
-                //once a Tile has been chosen, the Tile Object is noted in the _tileMap
-                //afterwards, it is placed at the correct x,y coordinates, at the given height, and a random facing of the Tile is picked to vary the look of the landscape.
-                _tileMap[x, y] = AddTile(tile, x - map.width / 2, y - map.height / 2, pixel * TileMaxHeight, Random.Range(0, 5));
+        for (int x = 0; x < map.width; x++) for (int y = 0; y < map.height; y++)                 
+            {
+                float pixel = map.GetPixel(x, y).maxColorComponent;
+                Tile t = AddTile( x - xCenter, y - yCenter, pixel, Random.Range(0, 5));
+                t._coordinateHeight = y;
+                t._coordinateWidth = x;
+                _tileMap[x, y] = t;
             }
+        
+        //second pass to assign neighbor tiles
+        for (int x = 0; x < map.width; x++) for (int y = 0; y < map.height; y++)
+            {
+                Tile t = _tileMap[x, y];
+                t._neighborTiles = FindNeighborsOfTile(t);
+            }
+        
+    }
+    //This script Loads a single Tile at Position x,y (on the Hexgrid) and height(scaled by TileMaxHeight)
+    //additionally, it can rotate them by 60° Increments
+    Tile AddTile( int x, int y, float pixel, int orientation)
+    {
+        //This section determines which Tile to use by its height
+        Tile.TileTypes tp;
+        GameObject tile;
+        switch (pixel)
+        {
+            case float p when p > 0.95:
+                tile = TMountainTile;
+                tp = Tile.TileTypes.Mountain;
+                break;
+            case float p when p > 0.85:
+                tile = MMountainTile;
+                tp = Tile.TileTypes.Mountain;
+                break;
+            case float p when p > 0.8:
+                tile = BMountainTile;
+                tp = Tile.TileTypes.Mountain;
+                break;
+            case float p when p > 0.75:
+                tile = TStoneTile;
+                tp = Tile.TileTypes.Stone;
+                break;
+            case float p when p > 0.65:
+                tile = MStoneTile;
+                tp = Tile.TileTypes.Stone;
+                break;
+            case float p when p > 0.6:
+                tile = BStoneTile;
+                tp = Tile.TileTypes.Stone;
+                break;
+            case float p when p > 0.55:
+                tile = TForestTile;
+                tp = Tile.TileTypes.Forest;
+                break;
+            case float p when p > 0.45:
+                tile = MForestTile;
+                tp = Tile.TileTypes.Forest;
+                break;
+            case float p when p > 0.4:
+                tile = BForestTile;
+                tp = Tile.TileTypes.Forest;
+                break;
+            case float p when p > 0.35:
+                tile = TGrassTile;
+                tp = Tile.TileTypes.Grass;
+                break;
+            case float p when p > 0.25:
+                tile = MGrassTile;
+                tp = Tile.TileTypes.Grass;
+                break;
+            case float p when p > 0.2:
+                tile = BGrassTile;
+                tp = Tile.TileTypes.Grass;
+                break;
+            case float p when p > 0.15:
+                tile = TSandTile;
+                tp = Tile.TileTypes.Sand;
+                break;
+            case float p when p > 0.05:
+                tile = MSandTile;
+                tp = Tile.TileTypes.Sand;
+                break;
+            case float p when p > 0.0:
+                tile = BSandTile;
+                tp = Tile.TileTypes.Sand;
+                break;
+
+            default:
+                tile = OceanTile;
+                tp = Tile.TileTypes.Water;
+                break;
         }
 
-
-    }
-    //This script Loads a single Tile at Position x,y (on the Hexgrid) and height(ingame Coordinates)
-    //additionally, it can rotate them by 60° Increments
-    Tile AddTile(GameObject tile, int x, int y, float height, int orientation)
-    {
         float angle = (float)(orientation % 6) * 60f;
+        float height = pixel * TileMaxHeight;
         Quaternion ori = Quaternion.AngleAxis(angle, Vector3.up);
-        Vector3 pos = new Vector3(x * TileRadius * HexDisplace, height, (y * TileRadius) + (x % 2) * TileRadius * 0.5f);
-        Instantiate(tile, pos, ori);
-        Tile t = tile.GetComponent<Tile>();
+        Vector3 pos = new Vector3(x * TileRadius * HexDisplace, height, (y * TileRadius) + ((x*x) % 2) * TileRadius * 0.5f);
+        foreach(Tile ts in tile.GetComponents<Tile>()) { GameObject.DestroyImmediate(ts,true); }
+        GameObject temp = Instantiate(tile, pos, ori);
+        //PrefabUtility.UnpackPrefabInstance(temp,PrefabUnpackMode.OutermostRoot,InteractionMode.AutomatedAction);
+        Tile t = temp.GetComponent<Tile>();
+        if (t==null) t = temp.AddComponent(typeof(Tile)) as Tile;
+        t._type = tp;
         return t;
     }
     #endregion
@@ -126,7 +160,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Resources
-    private Dictionary<ResourceTypes, float> _resourcesInWarehouse = new Dictionary<ResourceTypes, float>(); //Holds a number of stored resources for every ResourceType
+    private Dictionary<ResourceTypes, float> _resourcesInWarehouse = new Dictionary<ResourceTypes, float>() { {ResourceTypes.Fish,0f},{ ResourceTypes.Wood, 0f },{ ResourceTypes.Planks, 0f },{ ResourceTypes.Wool, 0f }, { ResourceTypes.Clothes, 0f }, { ResourceTypes.Potato, 0f }, { ResourceTypes.Schnapps, 0f } }; //Holds a number of stored resources for every ResourceType
 
     //A representation of _resourcesInWarehouse, broken into individual floats. Only for display in inspector, will be removed and replaced with UI later
     [SerializeField]
@@ -157,6 +191,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         loadMap(HeightMap);
         PopulateResourceDictionary();
     }
@@ -269,9 +304,41 @@ public class GameManager : MonoBehaviour
     private List<Tile> FindNeighborsOfTile(Tile t)
     {
         List<Tile> result = new List<Tile>();
+        int x = t._coordinateWidth;
+        int y = t._coordinateHeight;
+        int xBound = _tileMap.GetLength(0);
+        int yBound = _tileMap.GetLength(1);
+        if (x < 0 || x >= xBound || y < 0 || y >= yBound) throw new IndexOutOfRangeException("x,y: " + x.ToString() + "," + y.ToString());
+        else
+        {
+            bool phase = x % 2 == 1;
+            List<Tuple<int, int>> coords = new List<Tuple<int, int>>();
+            coords.Add(new Tuple<int, int>(x - 1, y));
+            coords.Add(new Tuple<int, int>(x + 1, y));
+            coords.Add(new Tuple<int, int>(x, y + 1));
+            coords.Add(new Tuple<int, int>(x, y - 1));
 
-        //TODO: put all neighbors in the result list
+            if (phase)
+            {
+                coords.Add(new Tuple<int, int>(x + 1, y + 1));
+                coords.Add(new Tuple<int, int>(x - 1, y + 1));
+            }
+            else
+            {
+                coords.Add(new Tuple<int, int>(x + 1, y - 1));
+                coords.Add(new Tuple<int, int>(x - 1, y - 1));
+            }
 
+            foreach (Tuple<int, int> coord in coords)
+            {
+                int xs = coord.Item1;
+                int ys = coord.Item2;
+                if ((xs >= 0 && xs < xBound) && (ys >= 0 && ys < yBound))
+                {
+                    result.Add(_tileMap[xs, ys]);
+                }
+            }
+        }
         return result;
     }
     #endregion

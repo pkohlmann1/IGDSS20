@@ -330,9 +330,17 @@ MonoBehaviour:
     type: 3}
   TMountainTile: {fileID: 2675678278957104552, guid: 80679ee2a86cd164c8df587c8d106bab,
     type: 3}
-  HeightMap: {fileID: 2800000, guid: e78aeb62d2558404f9e4a0b2b2d6b52a, type: 3}
-  TileRadius: 10
+  HeightMap: {fileID: 2800000, guid: 6c8b8b5dee9104b429f737ec1d927ec9, type: 3}
   TileMaxHeight: 10
+  _buildingPrefabs: []
+  _selectedBuildingPrefabIndex: 0
+  _ResourcesInWarehouse_Fish: 0
+  _ResourcesInWarehouse_Wood: 0
+  _ResourcesInWarehouse_Planks: 0
+  _ResourcesInWarehouse_Wool: 0
+  _ResourcesInWarehouse_Clothes: 0
+  _ResourcesInWarehouse_Potato: 0
+  _ResourcesInWarehouse_Schnapps: 0
 --- !u!4 &1405889858
 Transform:
   m_ObjectHideFlags: 0
