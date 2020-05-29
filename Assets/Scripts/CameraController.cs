@@ -88,7 +88,9 @@ public class CameraController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, 1000))
             {
-                Debug.Log(hit.transform.gameObject.name);
+                //Debug.Log(hit.transform.gameObject.name);
+                Tile t = hit.transform.gameObject.GetComponent<Tile>();
+                if (t!=null) GM.TileClicked(t._coordinateHeight,t._coordinateWidth);
             }
 
             if (plane.Raycast(ray, out entry))

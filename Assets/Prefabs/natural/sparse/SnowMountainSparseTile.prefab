@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Tree_01_Snow (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 105832, guid: 6801557f527ed7d488bdf58262dbf280, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 431944, guid: 6801557f527ed7d488bdf58262dbf280, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.25
@@ -79,6 +83,10 @@ PrefabInstance:
     - target: {fileID: 186004, guid: ce0336c838ea8bb47af6deede8f87396, type: 3}
       propertyPath: m_Name
       value: SM_Env_MountainSnow_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 186004, guid: ce0336c838ea8bb47af6deede8f87396, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 423222, guid: ce0336c838ea8bb47af6deede8f87396, type: 3}
       propertyPath: m_LocalPosition.x
@@ -149,6 +157,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Tree_02_Snow (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 197738, guid: 7619d966c4cb59b42aa66eebb0a05945, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 407938, guid: 7619d966c4cb59b42aa66eebb0a05945, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.0174
@@ -218,6 +230,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Tree_02_Snow (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 197738, guid: 7619d966c4cb59b42aa66eebb0a05945, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 407938, guid: 7619d966c4cb59b42aa66eebb0a05945, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.92
@@ -286,6 +302,10 @@ PrefabInstance:
     - target: {fileID: 105832, guid: 6801557f527ed7d488bdf58262dbf280, type: 3}
       propertyPath: m_Name
       value: SM_Env_Tree_01_Snow (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 105832, guid: 6801557f527ed7d488bdf58262dbf280, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 431944, guid: 6801557f527ed7d488bdf58262dbf280, type: 3}
       propertyPath: m_LocalPosition.x

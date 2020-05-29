@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Tree_01_Snow (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 105832, guid: 6801557f527ed7d488bdf58262dbf280, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 431944, guid: 6801557f527ed7d488bdf58262dbf280, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.99
@@ -79,6 +83,10 @@ PrefabInstance:
     - target: {fileID: 197738, guid: 7619d966c4cb59b42aa66eebb0a05945, type: 3}
       propertyPath: m_Name
       value: SM_Env_Tree_02_Snow
+      objectReference: {fileID: 0}
+    - target: {fileID: 197738, guid: 7619d966c4cb59b42aa66eebb0a05945, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 407938, guid: 7619d966c4cb59b42aa66eebb0a05945, type: 3}
       propertyPath: m_LocalPosition.x
@@ -149,6 +157,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Tree_01_Snow (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 105832, guid: 6801557f527ed7d488bdf58262dbf280, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 431944, guid: 6801557f527ed7d488bdf58262dbf280, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.69
@@ -217,6 +229,10 @@ PrefabInstance:
     - target: {fileID: 105832, guid: 6801557f527ed7d488bdf58262dbf280, type: 3}
       propertyPath: m_Name
       value: SM_Env_Tree_01_Snow (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 105832, guid: 6801557f527ed7d488bdf58262dbf280, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 431944, guid: 6801557f527ed7d488bdf58262dbf280, type: 3}
       propertyPath: m_LocalPosition.x
@@ -287,6 +303,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Tree_01_Snow (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 105832, guid: 6801557f527ed7d488bdf58262dbf280, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 431944, guid: 6801557f527ed7d488bdf58262dbf280, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.8377
@@ -355,6 +375,10 @@ PrefabInstance:
     - target: {fileID: 120608, guid: 5e9cb1529de312847aecd5dccdaa6693, type: 3}
       propertyPath: m_Name
       value: SM_Env_Tree_Twisted_01_Snow (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 120608, guid: 5e9cb1529de312847aecd5dccdaa6693, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 417898, guid: 5e9cb1529de312847aecd5dccdaa6693, type: 3}
       propertyPath: m_LocalPosition.x
@@ -425,6 +449,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Tree_Twisted_01_Snow
       objectReference: {fileID: 0}
+    - target: {fileID: 120608, guid: 5e9cb1529de312847aecd5dccdaa6693, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 417898, guid: 5e9cb1529de312847aecd5dccdaa6693, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.034
@@ -493,6 +521,10 @@ PrefabInstance:
     - target: {fileID: 197738, guid: 7619d966c4cb59b42aa66eebb0a05945, type: 3}
       propertyPath: m_Name
       value: SM_Env_Tree_02_Snow (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 197738, guid: 7619d966c4cb59b42aa66eebb0a05945, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 407938, guid: 7619d966c4cb59b42aa66eebb0a05945, type: 3}
       propertyPath: m_LocalPosition.x
@@ -563,6 +595,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_MountainSnow_01
       objectReference: {fileID: 0}
+    - target: {fileID: 186004, guid: ce0336c838ea8bb47af6deede8f87396, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 423222, guid: ce0336c838ea8bb47af6deede8f87396, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.13
@@ -631,6 +667,10 @@ PrefabInstance:
     - target: {fileID: 189464, guid: 98720b2a3ca09564a8ef6bdbb38868d4, type: 3}
       propertyPath: m_Name
       value: SM_Env_Tree_03_Snow (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 189464, guid: 98720b2a3ca09564a8ef6bdbb38868d4, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 414002, guid: 98720b2a3ca09564a8ef6bdbb38868d4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -701,6 +741,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Tree_02_Snow (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 197738, guid: 7619d966c4cb59b42aa66eebb0a05945, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 407938, guid: 7619d966c4cb59b42aa66eebb0a05945, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.72
@@ -769,6 +813,10 @@ PrefabInstance:
     - target: {fileID: 189464, guid: 98720b2a3ca09564a8ef6bdbb38868d4, type: 3}
       propertyPath: m_Name
       value: SM_Env_Tree_03_Snow (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 189464, guid: 98720b2a3ca09564a8ef6bdbb38868d4, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 414002, guid: 98720b2a3ca09564a8ef6bdbb38868d4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -839,6 +887,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Tree_03_Snow
       objectReference: {fileID: 0}
+    - target: {fileID: 189464, guid: 98720b2a3ca09564a8ef6bdbb38868d4, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 414002, guid: 98720b2a3ca09564a8ef6bdbb38868d4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.258
@@ -907,6 +959,10 @@ PrefabInstance:
     - target: {fileID: 105832, guid: 6801557f527ed7d488bdf58262dbf280, type: 3}
       propertyPath: m_Name
       value: SM_Env_Tree_01_Snow (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 105832, guid: 6801557f527ed7d488bdf58262dbf280, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 431944, guid: 6801557f527ed7d488bdf58262dbf280, type: 3}
       propertyPath: m_LocalPosition.x
@@ -977,6 +1033,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Tree_02_Snow (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 197738, guid: 7619d966c4cb59b42aa66eebb0a05945, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 407938, guid: 7619d966c4cb59b42aa66eebb0a05945, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.02
@@ -1046,6 +1106,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Tree_02_Snow (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 197738, guid: 7619d966c4cb59b42aa66eebb0a05945, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 407938, guid: 7619d966c4cb59b42aa66eebb0a05945, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3
@@ -1114,6 +1178,10 @@ PrefabInstance:
     - target: {fileID: 105832, guid: 6801557f527ed7d488bdf58262dbf280, type: 3}
       propertyPath: m_Name
       value: SM_Env_Tree_01_Snow (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 105832, guid: 6801557f527ed7d488bdf58262dbf280, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 431944, guid: 6801557f527ed7d488bdf58262dbf280, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1264,6 +1332,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Tree_03_Snow (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 189464, guid: 98720b2a3ca09564a8ef6bdbb38868d4, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 414002, guid: 98720b2a3ca09564a8ef6bdbb38868d4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.45
@@ -1333,6 +1405,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Tree_03_Snow (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 189464, guid: 98720b2a3ca09564a8ef6bdbb38868d4, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 414002, guid: 98720b2a3ca09564a8ef6bdbb38868d4, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.42
@@ -1401,6 +1477,10 @@ PrefabInstance:
     - target: {fileID: 120608, guid: 5e9cb1529de312847aecd5dccdaa6693, type: 3}
       propertyPath: m_Name
       value: SM_Env_Tree_Twisted_01_Snow (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 120608, guid: 5e9cb1529de312847aecd5dccdaa6693, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 417898, guid: 5e9cb1529de312847aecd5dccdaa6693, type: 3}
       propertyPath: m_LocalPosition.x

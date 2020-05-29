@@ -144,9 +144,11 @@ public class GameManager : MonoBehaviour
         float height = pixel * TileMaxHeight;
         Quaternion ori = Quaternion.AngleAxis(angle, Vector3.up);
         Vector3 pos = new Vector3(x * TileRadius * HexDisplace, height, (y * TileRadius) + ((x*x) % 2) * TileRadius * 0.5f);
-        foreach(Tile ts in tile.GetComponents<Tile>()) { GameObject.DestroyImmediate(ts,true); }
+        //foreach(Tile ts in tile.GetComponents<Tile>()) { GameObject.DestroyImmediate(ts,true); }
         GameObject temp = Instantiate(tile, pos, ori);
-        //PrefabUtility.UnpackPrefabInstance(temp,PrefabUnpackMode.OutermostRoot,InteractionMode.AutomatedAction);
+        //adding TileCover Cleaner Component
+        if (temp.GetComponent<TileCoverCleaner>() == null) temp.AddComponent(typeof(TileCoverCleaner));
+        //adding Tile Component
         Tile t = temp.GetComponent<Tile>();
         if (t==null) t = temp.AddComponent(typeof(Tile)) as Tile;
         t._type = tp;
@@ -160,7 +162,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Resources
-    private Dictionary<ResourceTypes, float> _resourcesInWarehouse = new Dictionary<ResourceTypes, float>() { {ResourceTypes.Fish,0f},{ ResourceTypes.Wood, 0f },{ ResourceTypes.Planks, 0f },{ ResourceTypes.Wool, 0f }, { ResourceTypes.Clothes, 0f }, { ResourceTypes.Potato, 0f }, { ResourceTypes.Schnapps, 0f } }; //Holds a number of stored resources for every ResourceType
+    private Dictionary<ResourceTypes, float> _resourcesInWarehouse = new Dictionary<ResourceTypes, float>(); //Holds a number of stored resources for every ResourceType
 
     //A representation of _resourcesInWarehouse, broken into individual floats. Only for display in inspector, will be removed and replaced with UI later
     [SerializeField]
@@ -284,7 +286,7 @@ public class GameManager : MonoBehaviour
     //Forwards the tile to the method for spawning buildings
     public void TileClicked(int height, int width)
     {
-        Tile t = _tileMap[height, width];
+        Tile t = _tileMap[width,height];
 
         PlaceBuildingOnTile(t);
     }
@@ -296,7 +298,8 @@ public class GameManager : MonoBehaviour
         if (_selectedBuildingPrefabIndex < _buildingPrefabs.Length)
         {
             //TODO: check if building can be placed and then istantiate it
-
+            TileCoverCleaner clean = t.gameObject.GetComponent<TileCoverCleaner>();
+            clean.setCoverInvisible();
         }
     }
 
