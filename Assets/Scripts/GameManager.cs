@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -294,12 +296,28 @@ public class GameManager : MonoBehaviour
     //Checks if the currently selected building type can be placed on the given tile and then instantiates an instance of the prefab
     private void PlaceBuildingOnTile(Tile t)
     {
+        GameObject selectedBuilding = _buildingPrefabs[_selectedBuildingPrefabIndex];
         //if there is building prefab for the number input
         if (_selectedBuildingPrefabIndex < _buildingPrefabs.Length)
         {
             //TODO: check if building can be placed and then istantiate it
-            TileCoverCleaner clean = t.gameObject.GetComponent<TileCoverCleaner>();
-            clean.setCoverInvisible();
+            if (t.tag == "ForestTile" && selectedBuilding.tag == "Lumberjack"){
+                TileCoverCleaner clean = t.gameObject.GetComponent<TileCoverCleaner>();
+                clean.setCoverInvisible();
+                Instantiate(selectedBuilding, new Vector3(t.transform.position.x + 4f, t.transform.position.y, t.transform.position.z - 3.5f), Quaternion.identity);
+            }
+            else if (t.tag == "SandTile" && selectedBuilding.tag == "Fishery")
+            {
+                TileCoverCleaner clean = t.gameObject.GetComponent<TileCoverCleaner>();
+                clean.setCoverInvisible();
+                Instantiate(selectedBuilding, new Vector3(t.transform.position.x - 22.2f, t.transform.position.y - 24.7f, t.transform.position.z - 15f), Quaternion.identity);
+            }
+            else if (t.tag == "GrassTile" && selectedBuilding.tag == "SheepFarm")
+            {
+                TileCoverCleaner clean = t.gameObject.GetComponent<TileCoverCleaner>();
+                clean.setCoverInvisible();
+                Instantiate(selectedBuilding, new Vector3(t.transform.position.x + 1.7f, t.transform.position.y + 4.3f, t.transform.position.z + 5.2f), Quaternion.identity);
+            }
         }
     }
 

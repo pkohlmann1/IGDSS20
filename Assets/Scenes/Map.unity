@@ -332,7 +332,10 @@ MonoBehaviour:
     type: 3}
   HeightMap: {fileID: 2800000, guid: 6c8b8b5dee9104b429f737ec1d927ec9, type: 3}
   TileMaxHeight: 10
-  _buildingPrefabs: []
+  _buildingPrefabs:
+  - {fileID: 3215915157544939247, guid: ed5ac5eace5b71942b16267b0ccf4050, type: 3}
+  - {fileID: 5762149774532876695, guid: a9bb6135000c75c45a22844e5623d049, type: 3}
+  - {fileID: 6617536803416633308, guid: 236a44836f51e7245abae2d04cc059a0, type: 3}
   _selectedBuildingPrefabIndex: 0
   _ResourcesInWarehouse_Fish: 0
   _ResourcesInWarehouse_Wood: 0
@@ -440,10 +443,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1435948886}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalRotation: {x: 0.38302222, y: 0.38302222, z: -0.17860618, w: 0.82139385}
+  m_LocalPosition: {x: 5.57, y: 13.84, z: 17.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 50, y: 50, z: 0}
