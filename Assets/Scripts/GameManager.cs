@@ -318,6 +318,30 @@ public class GameManager : MonoBehaviour
                 clean.setCoverInvisible();
                 Instantiate(selectedBuilding, new Vector3(t.transform.position.x + 1.7f, t.transform.position.y + 4.3f, t.transform.position.z + 5.2f), Quaternion.identity);
             }
+            else if (t.tag == "GrassTile" && selectedBuilding.tag == "PotatoFarm")
+            {
+                TileCoverCleaner clean = t.gameObject.GetComponent<TileCoverCleaner>();
+                clean.setCoverInvisible();
+                Instantiate(selectedBuilding, new Vector3(t.transform.position.x, t.transform.position.y - 22.6f, t.transform.position.z), Quaternion.identity);
+            }
+            else if ((t.tag == "GrassTile" || t.tag == "ForestTile" || t.tag == "StoneTile") && selectedBuilding.tag == "Sawmill")
+            {
+                TileCoverCleaner clean = t.gameObject.GetComponent<TileCoverCleaner>();
+                clean.setCoverInvisible();
+                Instantiate(selectedBuilding, new Vector3(t.transform.position.x + 0.15f, t.transform.position.y + 0.9f, t.transform.position.z + 1.2f), Quaternion.identity);
+            }
+            else if ((t.tag == "GrassTile" || t.tag == "ForestTile" || t.tag == "StoneTile") && selectedBuilding.tag == "FrameworkKnitter")
+            {
+                TileCoverCleaner clean = t.gameObject.GetComponent<TileCoverCleaner>();
+                clean.setCoverInvisible();
+                Instantiate(selectedBuilding, new Vector3(t.transform.position.x + 2.1f, t.transform.position.y + 1.2f, t.transform.position.z + 0.7f), Quaternion.identity);
+            }
+            else if ((t.tag == "GrassTile" || t.tag == "ForestTile" || t.tag == "StoneTile") && selectedBuilding.tag == "Distillery")
+            {
+                TileCoverCleaner clean = t.gameObject.GetComponent<TileCoverCleaner>();
+                clean.setCoverInvisible();
+                Instantiate(selectedBuilding, new Vector3(t.transform.position.x + 8.7f, t.transform.position.y + 4f, t.transform.position.z -1f), Quaternion.identity);
+            }
         }
     }
 

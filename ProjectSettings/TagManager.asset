@@ -10,6 +10,14 @@ TagManager:
   - Lumberjack
   - SheepFarm
   - GrassTile
+  - Distillery
+  - PotatoFarm
+  - Sawmill
+  - MountainTile
+  - StoneTile
+  - WaterTile
+  - FrameworkKnitter
+  - FrameworkKnitters
   layers:
   - Default
   - TransparentFX
