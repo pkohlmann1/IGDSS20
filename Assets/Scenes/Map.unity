@@ -340,7 +340,9 @@ MonoBehaviour:
   - {fileID: 8040923812031135241, guid: 943481d2f000a0345a63c30f21aebfe0, type: 3}
   - {fileID: 7291609704997663867, guid: 9c54a83525a84e2409117f50514beefe, type: 3}
   - {fileID: 5191518863820446841, guid: 68bf8d275d7ea3f48bc970eb2b64b7e5, type: 3}
-  _selectedBuildingPrefabIndex: 0
+  _selectedBuildingIndex: 0
+  _buildings: []
+  _money: 2000
   _ResourcesInWarehouse_Fish: 0
   _ResourcesInWarehouse_Wood: 0
   _ResourcesInWarehouse_Planks: 0
@@ -348,6 +350,7 @@ MonoBehaviour:
   _ResourcesInWarehouse_Clothes: 0
   _ResourcesInWarehouse_Potato: 0
   _ResourcesInWarehouse_Schnapps: 0
+  timer: 0
 --- !u!4 &1405889858
 Transform:
   m_ObjectHideFlags: 0

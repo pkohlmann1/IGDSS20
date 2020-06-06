@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Building : MonoBehaviour
@@ -8,8 +9,12 @@ public class Building : MonoBehaviour
     public BuildingTypes _type;
     public Tile _tile;
     public float _efficiency;
-    public static float NeighborMaxScaleFactor = 2f;
-    
+    public GameManager GM;
+
+    #region Time
+    private float timer = 0.0f;
+    public float waitTime;
+    #endregion
 
     #region enumeration
     public enum BuildingTypes {Empty,Fishery, Lumberjack, Sawmill, Sheep_Farm, Framework_Knitters, Potato_Farm, Schnapps_Distillery};
@@ -24,7 +29,6 @@ public class Building : MonoBehaviour
         {BuildingTypes.Framework_Knitters,30f },
         {BuildingTypes.Potato_Farm,30f },
         {BuildingTypes.Schnapps_Distillery,30f } };
-
     public static Dictionary<BuildingTypes, float> outputCount = new Dictionary<BuildingTypes, float>(){
         {BuildingTypes.Fishery,1f },
         { BuildingTypes.Lumberjack, 1f },
@@ -88,8 +92,38 @@ public class Building : MonoBehaviour
         {BuildingTypes.Potato_Farm,2f }, 
         {BuildingTypes.Schnapps_Distillery,2f }};
     public static HashSet<BuildingTypes> neighborsScaleEfficiency = new HashSet<BuildingTypes>() { BuildingTypes.Fishery, BuildingTypes.Lumberjack, BuildingTypes.Sheep_Farm, BuildingTypes.Potato_Farm };
-
     #endregion
 
+    void Update()
+    {
+        timer += Time.deltaTime;
+        if(timer > waitTime) 
+        {
+            timer = timer - waitTime;
+            produce();
+        }
+    }
+
+    void produce() 
+    {
+        bool resource_available = true;
+        bool needs_resource = inputResources.ContainsKey(_type);
+        if (needs_resource)
+        {
+            foreach (GameManager.ResourceTypes res in inputResources[_type]) Debug.Assert(GM._resourcesInWarehouse.ContainsKey(res), "Required resource type is not in Store.", this);
+            foreach (GameManager.ResourceTypes res in inputResources[_type]) if (GM._resourcesInWarehouse[res] < 1f) resource_available = false;
+            Debug.Assert(resource_available, "Input resources weren't available.", this);
+        }
+        if (resource_available) 
+        {
+            if (needs_resource)
+            {
+                foreach (GameManager.ResourceTypes res in inputResources[_type]) GM._resourcesInWarehouse[res]--;
+            }
+            Debug.Assert(GM._resourcesInWarehouse.ContainsKey(outputResource[_type]));
+            GM._resourcesInWarehouse[outputResource[_type]] += outputCount[_type];
+
+        }
+    }
 
 }

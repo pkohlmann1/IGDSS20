@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -162,10 +163,11 @@ public class GameManager : MonoBehaviour
     #region Buildings
     public GameObject[] _buildingPrefabs; //References to the building prefabs
     public int _selectedBuildingIndex = 0; //The current index used for choosing a prefab to spawn from the _buildingPrefabs list
+    public List<Building> _buildings = new List<Building>();
     #endregion
 
     #region Resources
-    private Dictionary<ResourceTypes, float> _resourcesInWarehouse = new Dictionary<ResourceTypes, float>(); //Holds a number of stored resources for every ResourceType
+    public Dictionary<ResourceTypes, float> _resourcesInWarehouse = new Dictionary<ResourceTypes, float>(); //Holds a number of stored resources for every ResourceType
     public float _money = 20f;
     //A representation of _resourcesInWarehouse, broken into individual floats. Only for display in inspector, will be removed and replaced with UI later
     [SerializeField]
@@ -188,9 +190,12 @@ public class GameManager : MonoBehaviour
     public enum ResourceTypes { None, Fish, Wood, Planks, Wool, Clothes, Potato, Schnapps }; //Enumeration of all available resource types. Can be addressed from other scripts by calling GameManager.ResourceTypes
     #endregion
 
-    
+    #region Time
+    public float timer = 0.0f;
+    private float waitTime = 60.0f;
+    #endregion
 
-    
+
 
 
     // Start is called before the first frame update
@@ -200,12 +205,19 @@ public class GameManager : MonoBehaviour
         loadMap(HeightMap);
         PopulateResourceDictionary();
     }
-        
+
     // Update is called once per frame
     void Update()
     {
         HandleKeyboardInput();
         UpdateInspectorNumbersForResources();
+
+        timer += Time.deltaTime;
+        if (timer > waitTime)
+        {
+            timer = timer - waitTime;
+            economyTick();
+        }
     }
 
     #region Methods
@@ -215,7 +227,7 @@ public class GameManager : MonoBehaviour
         _resourcesInWarehouse.Add(ResourceTypes.None, 0);
         _resourcesInWarehouse.Add(ResourceTypes.Fish, 0);
         _resourcesInWarehouse.Add(ResourceTypes.Wood, 0);
-        _resourcesInWarehouse.Add(ResourceTypes.Planks, 2);
+        _resourcesInWarehouse.Add(ResourceTypes.Planks, 0);
         _resourcesInWarehouse.Add(ResourceTypes.Wool, 0);
         _resourcesInWarehouse.Add(ResourceTypes.Clothes, 0);
         _resourcesInWarehouse.Add(ResourceTypes.Potato, 0);
@@ -302,10 +314,10 @@ public class GameManager : MonoBehaviour
     //Checks if the currently selected building type can be placed on the given tile and then instantiates an instance of the prefab
     private void PlaceBuildingOnTile(Tile t)
     {
-        GameObject selectedBuilding = _buildingPrefabs[_selectedBuildingIndex];
         //if there is building prefab for the number input
         if (_selectedBuildingIndex < _buildingPrefabs.Length)
         {
+            GameObject selectedBuilding = _buildingPrefabs[_selectedBuildingIndex];
             bool placeable = true;
             Building.BuildingTypes bt = Building.BuildingTypes.Empty;
             //TODO: check if building can be placed and then istantiate it
@@ -364,7 +376,7 @@ public class GameManager : MonoBehaviour
                 if (neighborCount < m1) placeable = false;
                 else
                 {
-                    efficiency = efficiency+(((Building.NeighborMaxScaleFactor-efficiency) / (float)(m2 - m1)) * (Math.Min(neighborCount, m2) - m1));//calculates efficiency factor
+                    efficiency =Math.Max(0f, Math.Min(1f,(float)(1 + neighborCount - m1) / (float)(1 + m2 - m1)));//calculates efficiency factor
                 }
             }
             UnityEngine.Debug.Assert(_resourcesInWarehouse[ResourceTypes.Planks] >= Building.cost_plank[bt], "Not enough planks.",this);
@@ -384,7 +396,12 @@ public class GameManager : MonoBehaviour
                 if (b == null) b = temp.AddComponent(typeof(Building)) as Building;
                 b._type = bt;
                 b._efficiency = efficiency;
+                b.waitTime = Building.resourceGeneration[bt] / efficiency;
+                b.GM = this;
                 t._building = b;
+                _buildings.Add(b);
+                _resourcesInWarehouse[ResourceTypes.Planks] -= Building.cost_plank[bt];
+                _money -= Building.cost_money[bt];
             }
             
         }
@@ -433,6 +450,11 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    private void economyTick() 
+    {
+        foreach (Building b in _buildings) _money -= Building.upkeep[b._type];
+        _money += 100f;
+    }
 
    
 
