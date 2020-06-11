@@ -332,14 +332,7 @@ MonoBehaviour:
     type: 3}
   HeightMap: {fileID: 2800000, guid: 6c8b8b5dee9104b429f737ec1d927ec9, type: 3}
   TileMaxHeight: 10
-  _buildingPrefabs:
-  - {fileID: 3215915157544939247, guid: ed5ac5eace5b71942b16267b0ccf4050, type: 3}
-  - {fileID: 5762149774532876695, guid: a9bb6135000c75c45a22844e5623d049, type: 3}
-  - {fileID: 6617536803416633308, guid: 236a44836f51e7245abae2d04cc059a0, type: 3}
-  - {fileID: 6581114638708397668, guid: e54b977cb33d38a42bb59dcb123a2dfb, type: 3}
-  - {fileID: 8040923812031135241, guid: 943481d2f000a0345a63c30f21aebfe0, type: 3}
-  - {fileID: 7291609704997663867, guid: 9c54a83525a84e2409117f50514beefe, type: 3}
-  - {fileID: 5191518863820446841, guid: 68bf8d275d7ea3f48bc970eb2b64b7e5, type: 3}
+  _buildingPrefabs: {fileID: 11400000, guid: 92cc135653563224097d8db519aa68b1, type: 2}
   _selectedBuildingIndex: 0
   _buildings: []
   _money: 2000

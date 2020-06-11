@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Buildings
+  m_EditorClassIdentifier: Assembly-CSharp::BuildingAssets
+  BuildingAssetEntries:
+  - {fileID: 11400000, guid: ae2ad8989be4b144fae5630282415730, type: 2}
+  - {fileID: 11400000, guid: 94b517ae7e8f2824ca64353fadb3d120, type: 2}
+  - {fileID: 11400000, guid: 91bc456382e127e44b3f8b12daaef4ab, type: 2}
+  - {fileID: 11400000, guid: e0201f1cbe507d242b2237f5306ee568, type: 2}
+  - {fileID: 11400000, guid: 0047d64e8a5aeb742b8da1163dc1140b, type: 2}
+  - {fileID: 11400000, guid: d43337855c47a2f45bca84ed48c9e028, type: 2}
+  - {fileID: 11400000, guid: 5f87d5d4d391c7f40bc1bf5f24725515, type: 2}

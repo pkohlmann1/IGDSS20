@@ -161,8 +161,9 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Buildings
-    public GameObject[] _buildingPrefabs; //References to the building prefabs
-    public int _selectedBuildingIndex = 0; //The current index used for choosing a prefab to spawn from the _buildingPrefabs list
+    //public GameObject[] _buildingPrefabs; //References to the building prefabs
+    public BuildingAssets _buildingPrefabs;
+    public Building.BuildingTypes _selectedBuildingIndex = Building.BuildingTypes.Empty; //The current index used for choosing a prefab to spawn from the _buildingPrefabs list
     public List<Building> _buildings = new List<Building>();
     #endregion
 
@@ -239,43 +240,43 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            _selectedBuildingIndex = 0;
+            _selectedBuildingIndex = Building.BuildingTypes.Fishery;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            _selectedBuildingIndex = 1;
+            _selectedBuildingIndex = Building.BuildingTypes.Lumberjack;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            _selectedBuildingIndex = 2;
+            _selectedBuildingIndex = Building.BuildingTypes.Sawmill;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            _selectedBuildingIndex = 3;
+            _selectedBuildingIndex = Building.BuildingTypes.Potato_Farm;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            _selectedBuildingIndex = 4;
+            _selectedBuildingIndex = Building.BuildingTypes.Schnapps_Distillery;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha6))
         {
-            _selectedBuildingIndex = 5;
+            _selectedBuildingIndex = Building.BuildingTypes.Sheep_Farm;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha7))
         {
-            _selectedBuildingIndex = 6;
+            _selectedBuildingIndex = Building.BuildingTypes.Framework_Knitters;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha8))
         {
-            _selectedBuildingIndex = 7;
+            _selectedBuildingIndex = Building.BuildingTypes.Empty;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha9))
         {
-            _selectedBuildingIndex = 8;
+            _selectedBuildingIndex = Building.BuildingTypes.Empty;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha0))
         {
-            _selectedBuildingIndex = 9;
+            _selectedBuildingIndex = Building.BuildingTypes.Empty;
         }
     }
 
@@ -315,93 +316,20 @@ public class GameManager : MonoBehaviour
     private void PlaceBuildingOnTile(Tile t)
     {
         //if there is building prefab for the number input
-        if (_selectedBuildingIndex < _buildingPrefabs.Length)
+        if (_selectedBuildingIndex != Building.BuildingTypes.Empty)
         {
-            GameObject selectedBuilding = _buildingPrefabs[_selectedBuildingIndex];
-            bool placeable = true;
-            Building.BuildingTypes bt = Building.BuildingTypes.Empty;
-            //TODO: check if building can be placed and then istantiate it
-            switch (selectedBuilding.tag) {
-                case "Lumberjack":
-                    bt = Building.BuildingTypes.Lumberjack;
-                    break;
+            Building.BuildingTypes bt = _selectedBuildingIndex;
+            _selectedBuildingIndex = Building.BuildingTypes.Empty;
+            GameObject selectedBuilding = _buildingPrefabs.Dict[bt];
 
-                case "Fishery":
-                    bt = Building.BuildingTypes.Fishery;
-                    break;
-
-                case "SheepFarm":
-                    bt = Building.BuildingTypes.Sheep_Farm;
-                    break;
-
-                case "PotatoFarm":
-                    bt = Building.BuildingTypes.Potato_Farm;
-                    break;
-
-                case "Sawmill":
-                    bt = Building.BuildingTypes.Sawmill;
-                    break;
-
-                case "FrameworkKnitter":
-                    bt = Building.BuildingTypes.Framework_Knitters;
-                    break;
-
-                case "Distillery":
-                    bt = Building.BuildingTypes.Schnapps_Distillery;
-                    break;
-
-                default:
-                    bt = Building.BuildingTypes.Empty;
-                    break;
-            }
-            UnityEngine.Debug.Assert(t._building is null, "This spot allready has a building.", this);
-            placeable = placeable && (t._building is null);
-
-            //determines if building is placed on right tile.
-            UnityEngine.Debug.Assert(Building.TileOptions.ContainsKey(bt),"Building has no tile type assigned.",this);
-            placeable = placeable && Building.TileOptions.ContainsKey(bt);
-            UnityEngine.Debug.Assert(Building.TileOptions[bt].Contains(t._type),"Building can't be placed on this tile type.",this);
-            placeable = placeable && Building.TileOptions[bt].Contains(t._type);
-
-            float efficiency = 1f;
-            //determines both if the building has enough neighbortiles of a certain type and how efficient the resulting building is
-            if (Building.neighborsScaleEfficiency.Contains(bt))
-            {
-                Tile.TileTypes nt = Building.Neighbor_Type[bt];
-                int m1 = Building.Neighbor_minmax[bt].Item1;
-                int m2 = Building.Neighbor_minmax[bt].Item2;
-                int neighborCount = 0;
-                foreach (Tile n in t._neighborTiles) if (n._type == nt) neighborCount++;
-                UnityEngine.Debug.Assert(neighborCount >= m1, "Not enough neighbors of the correct type.", this);
-                if (neighborCount < m1) placeable = false;
-                else
-                {
-                    efficiency =Math.Max(0f, Math.Min(1f,(float)(1 + neighborCount - m1) / (float)(1 + m2 - m1)));//calculates efficiency factor
-                }
-            }
-            UnityEngine.Debug.Assert(_resourcesInWarehouse[ResourceTypes.Planks] >= Building.cost_plank[bt], "Not enough planks.",this);
-            placeable = placeable && (_resourcesInWarehouse[ResourceTypes.Planks] >= Building.cost_plank[bt]);//looks up if building has all the construction materials
-            UnityEngine.Debug.Assert(_money >= Building.cost_money[bt],"Not enough money.", this);
-            placeable = placeable && (_money >= Building.cost_money[bt]);//looks up if building can be afforded
-
-
-
-
-            if (placeable) 
+            if (Building.Constructable(bt,t,this)) 
             {
                 TileCoverCleaner clean = t.gameObject.GetComponent<TileCoverCleaner>();
                 clean.setCoverInvisible();
                 GameObject temp = Instantiate(selectedBuilding, t.transform.position, t.transform.rotation);
                 Building b = temp.GetComponent<Building>();
                 if (b == null) b = temp.AddComponent(typeof(Building)) as Building;
-                b._type = bt;
-                b._efficiency = efficiency;
-                b.waitTime = Building.resourceGeneration[bt] / efficiency;
-                b.GM = this;
-                t._building = b;
-                _buildings.Add(b);
-                _resourcesInWarehouse[ResourceTypes.Planks] -= Building.cost_plank[bt];
-                _money -= Building.cost_money[bt];
+                b.Construct(bt, t, this);
             }
             
         }
@@ -459,4 +387,29 @@ public class GameManager : MonoBehaviour
    
 
    
+}
+
+
+[CreateAssetMenu(fileName = "fileName.asset", menuName = "Anno/Building Repository")]
+public class BuildingAssets : ScriptableObject
+{
+    [CreateAssetMenu(fileName = "fileName.asset", menuName = "Anno/Building Asset")]
+    [System.Serializable]
+    public class BuildingAsset : ScriptableObject
+    {
+        public Building.BuildingTypes bt;
+        public GameObject asset;
+    }
+
+    void OnEnable()
+    {
+        foreach (BuildingAsset ba in BuildingAssetEntries)
+        {
+            Dict.Add(ba.bt, ba.asset);
+            UnityEngine.Debug.Log("added " + ba.bt.ToString() + " to Dictionary.");
+        }
+    }
+
+    public BuildingAsset[] BuildingAssetEntries;
+    public Dictionary<Building.BuildingTypes, GameObject> Dict = new Dictionary<Building.BuildingTypes, GameObject>();
 }
