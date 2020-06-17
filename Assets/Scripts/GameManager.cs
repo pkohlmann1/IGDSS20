@@ -240,43 +240,43 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            _selectedBuildingIndex = Building.BuildingTypes.Fishery;
+            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Fishery;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            _selectedBuildingIndex = Building.BuildingTypes.Lumberjack;
+            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Lumberjack;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            _selectedBuildingIndex = Building.BuildingTypes.Sawmill;
+            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Sawmill;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            _selectedBuildingIndex = Building.BuildingTypes.Potato_Farm;
+            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Potato_Farm;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            _selectedBuildingIndex = Building.BuildingTypes.Schnapps_Distillery;
+            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Schnapps_Distillery;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha6))
         {
-            _selectedBuildingIndex = Building.BuildingTypes.Sheep_Farm;
+            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Sheep_Farm;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha7))
         {
-            _selectedBuildingIndex = Building.BuildingTypes.Framework_Knitters;
+            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Framework_Knitters;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha8))
         {
-            _selectedBuildingIndex = Building.BuildingTypes.Empty;
+            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Empty;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha9))
         {
-            _selectedBuildingIndex = Building.BuildingTypes.Empty;
+            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Empty;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha0))
         {
-            _selectedBuildingIndex = Building.BuildingTypes.Empty;
+            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Empty;
         }
     }
 
@@ -316,19 +316,19 @@ public class GameManager : MonoBehaviour
     private void PlaceBuildingOnTile(Tile t)
     {
         //if there is building prefab for the number input
-        if (_selectedBuildingIndex != Building.BuildingTypes.Empty)
+        if (_selectedBuildingIndex != ProductionBuilding.BuildingTypes.Empty)
         {
-            Building.BuildingTypes bt = _selectedBuildingIndex;
-            _selectedBuildingIndex = Building.BuildingTypes.Empty;
+            ProductionBuilding.BuildingTypes bt = _selectedBuildingIndex;
+            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Empty;
             GameObject selectedBuilding = _buildingPrefabs.Dict[bt];
 
-            if (Building.Constructable(bt,t,this)) 
+            if (ProductionBuilding.Constructable(bt,t,this)) 
             {
                 TileCoverCleaner clean = t.gameObject.GetComponent<TileCoverCleaner>();
                 clean.setCoverInvisible();
                 GameObject temp = Instantiate(selectedBuilding, t.transform.position, t.transform.rotation);
-                Building b = temp.GetComponent<Building>();
-                if (b == null) b = temp.AddComponent(typeof(Building)) as Building;
+                ProductionBuilding b = temp.GetComponent<ProductionBuilding>();
+                if (b == null) b = temp.AddComponent(typeof(ProductionBuilding)) as ProductionBuilding;
                 b.Construct(bt, t, this);
             }
             
@@ -380,7 +380,7 @@ public class GameManager : MonoBehaviour
 
     private void economyTick() 
     {
-        foreach (Building b in _buildings) _money -= Building.upkeep[b._type];
+        foreach (ProductionBuilding b in _buildings) _money -= ProductionBuilding.upkeep[b._type];
         _money += 100f;
     }
 
@@ -397,7 +397,7 @@ public class BuildingAssets : ScriptableObject
     [System.Serializable]
     public class BuildingAsset : ScriptableObject
     {
-        public Building.BuildingTypes bt;
+        public ProductionBuilding.BuildingTypes bt;
         public GameObject asset;
     }
 
@@ -411,5 +411,5 @@ public class BuildingAssets : ScriptableObject
     }
 
     public BuildingAsset[] BuildingAssetEntries;
-    public Dictionary<Building.BuildingTypes, GameObject> Dict = new Dictionary<Building.BuildingTypes, GameObject>();
+    public Dictionary<ProductionBuilding.BuildingTypes, GameObject> Dict = new Dictionary<ProductionBuilding.BuildingTypes, GameObject>();
 }
