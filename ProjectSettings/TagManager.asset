@@ -18,6 +18,7 @@ TagManager:
   - WaterTile
   - FrameworkKnitter
   - FrameworkKnitters
+  - GameManager
   layers:
   - Default
   - TransparentFX
