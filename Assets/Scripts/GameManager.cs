@@ -316,20 +316,21 @@ public class GameManager : MonoBehaviour
     private void PlaceBuildingOnTile(Tile t)
     {
         //if there is building prefab for the number input
-        if (_selectedBuildingIndex != ProductionBuilding.BuildingTypes.Empty)
+        if (_selectedBuildingIndex != Building.BuildingTypes.Empty)
         {
-            ProductionBuilding.BuildingTypes bt = _selectedBuildingIndex;
-            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Empty;
+            Building.BuildingTypes bt = _selectedBuildingIndex;
+            _selectedBuildingIndex = Building.BuildingTypes.Empty;
             GameObject selectedBuilding = _buildingPrefabs.Dict[bt];
 
-            if (ProductionBuilding.Constructable(bt,t,this)) 
+            if (Building.Constructable(bt,t,this)) 
             {
                 TileCoverCleaner clean = t.gameObject.GetComponent<TileCoverCleaner>();
                 clean.setCoverInvisible();
                 GameObject temp = Instantiate(selectedBuilding, t.transform.position, t.transform.rotation);
-                ProductionBuilding b = temp.GetComponent<ProductionBuilding>();
-                if (b == null) b = temp.AddComponent(typeof(ProductionBuilding)) as ProductionBuilding;
+                Building b = temp.GetComponent<Building>();
+                if (b == null) b = temp.AddComponent(Building.buildingClassType[bt]) as Building;
                 b.Construct(bt, t, this);
+                _buildings.Add(b);
             }
             
         }
@@ -376,17 +377,19 @@ public class GameManager : MonoBehaviour
         }
         return result;
     }
-    #endregion
 
-    private void economyTick() 
+    private void economyTick()
     {
         foreach (ProductionBuilding b in _buildings) _money -= ProductionBuilding.upkeep[b._type];
         _money += 100f;
     }
 
-   
+    #endregion
 
-   
+
+
+
+
 }
 
 

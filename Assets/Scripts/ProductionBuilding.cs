@@ -5,12 +5,8 @@ using UnityEngine;
 
 public class ProductionBuilding : Building
 {
-    public BuildingTypes _type;
-    public Tile _tile;
     public float _efficiency;
-    public GameManager GM;
-
-
+    
     #region Time
     private float timer = 0.0f;
     public float waitTime;
@@ -72,9 +68,10 @@ public class ProductionBuilding : Building
     }
 
 
-    void Update()
+    new void Update()
     {
-        timer += Time.deltaTime;
+        base.Update();
+        timer += Time.deltaTime*(_workerCount/Building.workerCapacity[_type])*_happiness;
         if (timer > waitTime)
         {
             timer = timer - waitTime;
@@ -103,6 +100,11 @@ public class ProductionBuilding : Building
             GM._resourcesInWarehouse[outputResource[_type]] += outputCount[_type];
 
         }
+    }
+
+    override public int WorkerCount() 
+    {
+        return _workers.Count;
     }
 }
 

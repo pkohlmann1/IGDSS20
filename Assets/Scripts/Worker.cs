@@ -10,7 +10,7 @@ public class Worker : MonoBehaviour
     #endregion
 
     public float _age; // The age of this worker
-    public float _happiness; // The happiness of this worker
+    public float _happiness; // The happiness of this worker|| assume value range [0,1]
 
     // Start is called before the first frame update
     void Start()

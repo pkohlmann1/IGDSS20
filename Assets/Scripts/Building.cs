@@ -12,6 +12,8 @@ public abstract class Building : MonoBehaviour
 
     #region Workers
     public List<Worker> _workers; //List of all workers associated with this building, either for work or living
+    public int _workerCount;
+    public float _happiness;
     #endregion
 
     #region Jobs
@@ -19,9 +21,16 @@ public abstract class Building : MonoBehaviour
     #endregion
 
     #region enumeration
-    public enum BuildingTypes { Empty, Fishery, Lumberjack, Sawmill, Sheep_Farm, Framework_Knitters, Potato_Farm, Schnapps_Distillery };
+    public enum BuildingTypes { Empty, Fishery, Lumberjack, Sawmill, Sheep_Farm, Framework_Knitters, Potato_Farm, Schnapps_Distillery, Farm_House };
     #endregion
 
+    #region Referentials
+    public BuildingTypes _type;
+    public Tile _tile;
+    public GameManager GM;
+    #endregion
+
+    #region dictionaries
     public static Dictionary<BuildingTypes, HashSet<Tile.TileTypes>> TileOptions = new Dictionary<BuildingTypes, HashSet<Tile.TileTypes>>() {
         {BuildingTypes.Fishery,new HashSet<Tile.TileTypes>() {Tile.TileTypes.Sand } },
         { BuildingTypes.Lumberjack, new HashSet<Tile.TileTypes>() { Tile.TileTypes.Forest } },
@@ -30,6 +39,26 @@ public abstract class Building : MonoBehaviour
         {BuildingTypes.Framework_Knitters,new HashSet<Tile.TileTypes>() {Tile.TileTypes.Grass, Tile.TileTypes.Forest, Tile.TileTypes.Stone } },
         {BuildingTypes.Potato_Farm,new HashSet<Tile.TileTypes>() {Tile.TileTypes.Grass} },
         {BuildingTypes.Schnapps_Distillery,new HashSet<Tile.TileTypes>() {Tile.TileTypes.Grass, Tile.TileTypes.Forest, Tile.TileTypes.Stone } }};
+    public static Dictionary<BuildingTypes, Type> buildingClassType = new Dictionary<BuildingTypes, Type>() {
+        {BuildingTypes.Empty,typeof(Building)},
+        { BuildingTypes.Farm_House, typeof(HousingBuilding) },
+        { BuildingTypes.Fishery, typeof(ProductionBuilding) },
+        { BuildingTypes.Framework_Knitters, typeof(ProductionBuilding) },
+        { BuildingTypes.Lumberjack, typeof(ProductionBuilding) },
+        { BuildingTypes.Potato_Farm, typeof(ProductionBuilding) },
+        { BuildingTypes.Sawmill, typeof(ProductionBuilding) },
+        { BuildingTypes.Schnapps_Distillery, typeof(ProductionBuilding) },
+        { BuildingTypes.Sheep_Farm, typeof(ProductionBuilding) }};
+    public static Dictionary<BuildingTypes, Tuple<int, int>> Neighbor_minmax = new Dictionary<BuildingTypes, Tuple<int, int>>() {
+        {BuildingTypes.Fishery,new Tuple<int, int>(1,3) },
+        { BuildingTypes.Lumberjack, new Tuple<int, int>(1, 6) },
+        { BuildingTypes.Sheep_Farm, new Tuple<int, int>(1, 4) },
+        { BuildingTypes.Potato_Farm, new Tuple<int, int>(1, 4) } };
+    public static Dictionary<BuildingTypes, Tile.TileTypes> Neighbor_Type = new Dictionary<BuildingTypes, Tile.TileTypes>() {
+        {BuildingTypes.Fishery,Tile.TileTypes.Water },
+        {BuildingTypes.Lumberjack,Tile.TileTypes.Forest },
+        {BuildingTypes.Sheep_Farm,Tile.TileTypes.Grass },
+        {BuildingTypes.Potato_Farm,Tile.TileTypes.Grass }  };
     public static Dictionary<BuildingTypes, float> cost_money = new Dictionary<BuildingTypes, float>() {
         {BuildingTypes.Fishery,100f },
         {BuildingTypes.Lumberjack,100f },
@@ -46,16 +75,6 @@ public abstract class Building : MonoBehaviour
         {BuildingTypes.Framework_Knitters,2f },
         {BuildingTypes.Potato_Farm,2f },
         {BuildingTypes.Schnapps_Distillery,2f }};
-    public static Dictionary<BuildingTypes, Tuple<int, int>> Neighbor_minmax = new Dictionary<BuildingTypes, Tuple<int, int>>() {
-        {BuildingTypes.Fishery,new Tuple<int, int>(1,3) },
-        { BuildingTypes.Lumberjack, new Tuple<int, int>(1, 6) },
-        { BuildingTypes.Sheep_Farm, new Tuple<int, int>(1, 4) },
-        { BuildingTypes.Potato_Farm, new Tuple<int, int>(1, 4) } };
-    public static Dictionary<BuildingTypes, Tile.TileTypes> Neighbor_Type = new Dictionary<BuildingTypes, Tile.TileTypes>() {
-        {BuildingTypes.Fishery,Tile.TileTypes.Water },
-        {BuildingTypes.Lumberjack,Tile.TileTypes.Forest },
-        {BuildingTypes.Sheep_Farm,Tile.TileTypes.Grass },
-        {BuildingTypes.Potato_Farm,Tile.TileTypes.Grass }  };
     public static Dictionary<BuildingTypes, float> upkeep = new Dictionary<BuildingTypes, float>() {
         {BuildingTypes.Fishery,40f },
         { BuildingTypes.Lumberjack, 10f },
@@ -64,8 +83,9 @@ public abstract class Building : MonoBehaviour
         {BuildingTypes.Framework_Knitters,50f },
         {BuildingTypes.Potato_Farm,20f },
         {BuildingTypes.Schnapps_Distillery,40f }};
+    public static Dictionary<BuildingTypes, int> workerCapacity = new Dictionary<BuildingTypes, int>() { { BuildingTypes.Farm_House, 10 } };
     public static HashSet<BuildingTypes> neighborsScaleEfficiency = new HashSet<BuildingTypes>() { BuildingTypes.Fishery, BuildingTypes.Lumberjack, BuildingTypes.Sheep_Farm, BuildingTypes.Potato_Farm };
-
+    #endregion
 
     public abstract void Construct(BuildingTypes bt, Tile t, GameManager gm);
 
@@ -102,5 +122,20 @@ public abstract class Building : MonoBehaviour
     {
         _workers.Remove(w);
     }
+    public abstract int WorkerCount();
+    public float WorkerHappiness() 
+    {
+        float happiness = 0;
+        foreach (Worker w in _workers) if (w.gameObject.activeInHierarchy) happiness += w._happiness;
+        return happiness/_workerCount;
+    }
+
+    protected void Update()
+    {
+        _workerCount = WorkerCount();
+        _happiness = WorkerHappiness();
+    }
     #endregion
+
+
 }
