@@ -9,8 +9,6 @@ public class HousingBuilding : Building
 
     float respawnTime = 30f;
     float respawn_timer = 0f;
-    float _happiness;
-    int
 
 
     override public void Construct(BuildingTypes bt, Tile t, GameManager gm)
@@ -48,7 +46,7 @@ public class HousingBuilding : Building
 
     public void createWorker(float age)
     {
-        UnityEngine.Debug.Assert(Building.workerCapacity[_type] > , "", this);
+        UnityEngine.Debug.Assert(Building.workerCapacity[_type] > _workerCount, "Building is allready fully occupied", this);
         foreach (Worker w in _workers)
         {
             if (!w.gameObject.activeInHierarchy)
