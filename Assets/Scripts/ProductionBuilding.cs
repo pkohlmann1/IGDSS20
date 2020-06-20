@@ -6,7 +6,6 @@ using UnityEngine;
 public class ProductionBuilding : Building
 {
     public float _efficiency;
-    
     #region Time
     private float timer = 0.0f;
     public float waitTime;
@@ -62,11 +61,17 @@ public class ProductionBuilding : Building
         _type = bt;
         t._building = this;
         GM._buildings.Add(this);
+        _tile = t;
         //deducting resources used in construction
         GM._resourcesInWarehouse[GameManager.ResourceTypes.Planks] -= Building.cost_plank[bt];
         GM._money -= Building.cost_money[bt];
     }
 
+
+    private void Start()
+    {
+        _workers = new List<Worker>();
+    }
 
     new void Update()
     {

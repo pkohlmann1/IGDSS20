@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 63da62f8ab432294cbe956d405b6e794, type: 3}
   m_Name: Buildings
   m_EditorClassIdentifier: Assembly-CSharp::BuildingAssets
   BuildingAssetEntries:
+  - {fileID: 11400000, guid: df896f6036d316247b59caabae76dd1f, type: 2}
   - {fileID: 11400000, guid: ae2ad8989be4b144fae5630282415730, type: 2}
   - {fileID: 11400000, guid: 94b517ae7e8f2824ca64353fadb3d120, type: 2}
   - {fileID: 11400000, guid: 91bc456382e127e44b3f8b12daaef4ab, type: 2}

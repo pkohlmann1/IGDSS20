@@ -196,7 +196,9 @@ public class GameManager : MonoBehaviour
     private float waitTime = 60.0f;
     #endregion
 
-
+    #region Workers
+    public GameObject WorkerModel;
+    #endregion
 
 
     // Start is called before the first frame update
@@ -268,7 +270,7 @@ public class GameManager : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Alpha8))
         {
-            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Empty;
+            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Farm_House;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha9))
         {
@@ -380,7 +382,7 @@ public class GameManager : MonoBehaviour
 
     private void economyTick()
     {
-        foreach (ProductionBuilding b in _buildings) _money -= ProductionBuilding.upkeep[b._type];
+        foreach (Building b in _buildings) _money -= Building.upkeep[b._type];
         _money += 100f;
     }
 
@@ -393,26 +395,3 @@ public class GameManager : MonoBehaviour
 }
 
 
-[CreateAssetMenu(fileName = "fileName.asset", menuName = "Anno/Building Repository")]
-public class BuildingAssets : ScriptableObject
-{
-    [CreateAssetMenu(fileName = "fileName.asset", menuName = "Anno/Building Asset")]
-    [System.Serializable]
-    public class BuildingAsset : ScriptableObject
-    {
-        public ProductionBuilding.BuildingTypes bt;
-        public GameObject asset;
-    }
-
-    void OnEnable()
-    {
-        foreach (BuildingAsset ba in BuildingAssetEntries)
-        {
-            Dict.Add(ba.bt, ba.asset);
-            UnityEngine.Debug.Log("added " + ba.bt.ToString() + " to Dictionary.");
-        }
-    }
-
-    public BuildingAsset[] BuildingAssetEntries;
-    public Dictionary<ProductionBuilding.BuildingTypes, GameObject> Dict = new Dictionary<ProductionBuilding.BuildingTypes, GameObject>();
-}

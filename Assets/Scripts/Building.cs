@@ -6,10 +6,7 @@ using UnityEngine;
 
 public abstract class Building : MonoBehaviour
 {
-    #region Manager References
-    JobManager _jobManager; //Reference to the JobManager
-    #endregion
-
+    
     #region Workers
     public List<Worker> _workers; //List of all workers associated with this building, either for work or living
     public int _workerCount;
@@ -27,7 +24,12 @@ public abstract class Building : MonoBehaviour
     #region Referentials
     public BuildingTypes _type;
     public Tile _tile;
+
+    #region Manager References
+    JobManager _jobManager; //Reference to the JobManager
     public GameManager GM;
+    #endregion
+
     #endregion
 
     #region dictionaries
@@ -38,7 +40,8 @@ public abstract class Building : MonoBehaviour
         {BuildingTypes.Sheep_Farm,new HashSet<Tile.TileTypes>() {Tile.TileTypes.Grass} },
         {BuildingTypes.Framework_Knitters,new HashSet<Tile.TileTypes>() {Tile.TileTypes.Grass, Tile.TileTypes.Forest, Tile.TileTypes.Stone } },
         {BuildingTypes.Potato_Farm,new HashSet<Tile.TileTypes>() {Tile.TileTypes.Grass} },
-        {BuildingTypes.Schnapps_Distillery,new HashSet<Tile.TileTypes>() {Tile.TileTypes.Grass, Tile.TileTypes.Forest, Tile.TileTypes.Stone } }};
+        {BuildingTypes.Schnapps_Distillery,new HashSet<Tile.TileTypes>() {Tile.TileTypes.Grass, Tile.TileTypes.Forest, Tile.TileTypes.Stone } },
+        {BuildingTypes.Farm_House,new HashSet<Tile.TileTypes>() {Tile.TileTypes.Grass, Tile.TileTypes.Forest, Tile.TileTypes.Stone } }};
     public static Dictionary<BuildingTypes, Type> buildingClassType = new Dictionary<BuildingTypes, Type>() {
         {BuildingTypes.Empty,typeof(Building)},
         { BuildingTypes.Farm_House, typeof(HousingBuilding) },
@@ -66,7 +69,8 @@ public abstract class Building : MonoBehaviour
         {BuildingTypes.Sheep_Farm,100f },
         {BuildingTypes.Framework_Knitters,100f },
         {BuildingTypes.Potato_Farm,100f },
-        {BuildingTypes.Schnapps_Distillery,100f } };
+        {BuildingTypes.Schnapps_Distillery,100f },
+        {BuildingTypes.Farm_House,100f } };
     public static Dictionary<BuildingTypes, float> cost_plank = new Dictionary<BuildingTypes, float>() {
         {BuildingTypes.Fishery,2f },
         { BuildingTypes.Lumberjack, 0f },
@@ -74,7 +78,8 @@ public abstract class Building : MonoBehaviour
         {BuildingTypes.Sheep_Farm,2f },
         {BuildingTypes.Framework_Knitters,2f },
         {BuildingTypes.Potato_Farm,2f },
-        {BuildingTypes.Schnapps_Distillery,2f }};
+        {BuildingTypes.Schnapps_Distillery,2f },
+        {BuildingTypes.Farm_House,0f }};
     public static Dictionary<BuildingTypes, float> upkeep = new Dictionary<BuildingTypes, float>() {
         {BuildingTypes.Fishery,40f },
         { BuildingTypes.Lumberjack, 10f },
@@ -82,11 +87,23 @@ public abstract class Building : MonoBehaviour
         {BuildingTypes.Sheep_Farm,20f },
         {BuildingTypes.Framework_Knitters,50f },
         {BuildingTypes.Potato_Farm,20f },
-        {BuildingTypes.Schnapps_Distillery,40f }};
-    public static Dictionary<BuildingTypes, int> workerCapacity = new Dictionary<BuildingTypes, int>() { { BuildingTypes.Farm_House, 10 } };
+        {BuildingTypes.Schnapps_Distillery,40f },
+        {BuildingTypes.Farm_House,0f }
+    };
+    public static Dictionary<BuildingTypes, int> workerCapacity = new Dictionary<BuildingTypes, int>() { 
+        { BuildingTypes.Farm_House, 10 }, 
+        { BuildingTypes.Fishery, 25}, 
+        { BuildingTypes.Lumberjack, 5 }, 
+        { BuildingTypes.Sawmill, 10 }, 
+        { BuildingTypes.Sheep_Farm, 10 }, 
+        { BuildingTypes.Framework_Knitters, 50 }, 
+        { BuildingTypes.Potato_Farm, 20 }, 
+        { BuildingTypes.Schnapps_Distillery, 20 } };
     public static HashSet<BuildingTypes> neighborsScaleEfficiency = new HashSet<BuildingTypes>() { BuildingTypes.Fishery, BuildingTypes.Lumberjack, BuildingTypes.Sheep_Farm, BuildingTypes.Potato_Farm };
     #endregion
 
+
+    #region Methods   
     public abstract void Construct(BuildingTypes bt, Tile t, GameManager gm);
 
     public static bool Constructable(BuildingTypes bt, Tile t, GameManager GM)
@@ -112,7 +129,6 @@ public abstract class Building : MonoBehaviour
         return placeable;
     }
 
-    #region Methods   
     public void WorkerAssignedToBuilding(Worker w)
     {
         _workers.Add(w);

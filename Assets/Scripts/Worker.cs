@@ -5,7 +5,7 @@ using UnityEngine;
 public class Worker : MonoBehaviour
 {
     #region Manager References
-    JobManager _jobManager; //Reference to the JobManager
+    public JobManager _jobManager; //Reference to the JobManager
     public GameManager _gameManager;//Reference to the GameManager
     #endregion
 
@@ -20,6 +20,7 @@ public class Worker : MonoBehaviour
     void Start()
     {
         _gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+        _jobManager = GameObject.FindWithTag("GameManager").GetComponent<JobManager>();
         InvokeRepeating("Age", 15.0f, 15.0f);
         InvokeRepeating("´ConsumeRessources", 60.0f, 60.0f);
     }
@@ -68,7 +69,7 @@ public class Worker : MonoBehaviour
 
     private void Die()
     {
-        Destroy(this.gameObject, 1f);
+        this.gameObject.SetActive(false);
     }
 
     private void ConsumeRessources()

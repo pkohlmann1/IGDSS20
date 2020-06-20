@@ -25,6 +25,7 @@ public class HousingBuilding : Building
         GM = gm;
         _type = bt;
         t._building = this;
+        _tile = t;
         GM._buildings.Add(this);
         //deducting resources used in construction
         GM._resourcesInWarehouse[GameManager.ResourceTypes.Planks] -= Building.cost_plank[bt];
@@ -62,6 +63,14 @@ public class HousingBuilding : Building
     void Start()
     {
         _workers = new List<Worker>(Building.workerCapacity[_type]);
+        for(int i = 0;i< Building.workerCapacity[_type]; i++) 
+        {
+            GameObject workerCopy = Instantiate(GM.WorkerModel, transform);
+            Worker w = workerCopy.GetComponent<Worker>();
+            if (w == null) w = workerCopy.AddComponent(typeof(Worker)) as Worker;
+            _workers.Add(w);
+            workerCopy.SetActive(false);
+        }
         for (int i = 0; i < startingWorkers[_type]; i++) createWorker();
     }
 
