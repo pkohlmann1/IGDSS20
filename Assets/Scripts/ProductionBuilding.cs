@@ -6,6 +6,7 @@ using UnityEngine;
 public class ProductionBuilding : Building
 {
     public float _efficiency;
+    public List<Job> _jobs; 
     #region Time
     private float timer = 0.0f;
     public float waitTime;
@@ -58,6 +59,7 @@ public class ProductionBuilding : Building
         }
         waitTime = ProductionBuilding.resourceGeneration[bt] / _efficiency;
         GM = gm;
+        _jobManager = gm.gameObject.GetComponent(typeof(JobManager)) as JobManager;
         _type = bt;
         t._building = this;
         GM._buildings.Add(this);
@@ -71,12 +73,20 @@ public class ProductionBuilding : Building
     private void Start()
     {
         _workers = new List<Worker>();
+        _jobs = new List<Job>(Building.workerCapacity[_type]);
+        for (int i = 0; i < Building.workerCapacity[_type]; i++) 
+        {
+            Job j = new Job(this);
+            _jobs.Add(j);
+            _jobManager.RegisterJob(j);
+        }
     }
 
     new void Update()
     {
         base.Update();
-        timer += Time.deltaTime*(_workerCount/Building.workerCapacity[_type])*_happiness;
+        UnityEngine.Debug.Assert(_workerCount > 0, "no Workers assigned to this Building", this);
+        if (_workerCount > 0) timer += Time.deltaTime * (_workerCount / Building.workerCapacity[_type]) * _happiness;
         if (timer > waitTime)
         {
             timer = timer - waitTime;

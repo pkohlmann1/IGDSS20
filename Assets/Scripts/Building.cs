@@ -13,10 +13,6 @@ public abstract class Building : MonoBehaviour
     public float _happiness;
     #endregion
 
-    #region Jobs
-    public List<Job> _jobs; // List of all available Jobs. Is populated in Start()
-    #endregion
-
     #region enumeration
     public enum BuildingTypes { Empty, Fishery, Lumberjack, Sawmill, Sheep_Farm, Framework_Knitters, Potato_Farm, Schnapps_Distillery, Farm_House };
     #endregion
@@ -26,7 +22,7 @@ public abstract class Building : MonoBehaviour
     public Tile _tile;
 
     #region Manager References
-    JobManager _jobManager; //Reference to the JobManager
+    public JobManager _jobManager; //Reference to the JobManager
     public GameManager GM;
     #endregion
 

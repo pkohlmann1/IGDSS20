@@ -23,6 +23,7 @@ public class HousingBuilding : Building
         }
 
         GM = gm;
+        _jobManager = gm.gameObject.GetComponent(typeof(JobManager)) as JobManager;
         _type = bt;
         t._building = this;
         _tile = t;
@@ -69,9 +70,10 @@ public class HousingBuilding : Building
             Worker w = workerCopy.GetComponent<Worker>();
             if (w == null) w = workerCopy.AddComponent(typeof(Worker)) as Worker;
             _workers.Add(w);
+            w._house = this;
             workerCopy.SetActive(false);
         }
-        for (int i = 0; i < startingWorkers[_type]; i++) createWorker();
+        for (int i = 0; i < startingWorkers[_type]; i++) createWorker(Worker.workingAge);
     }
 
     // Update is called once per frame

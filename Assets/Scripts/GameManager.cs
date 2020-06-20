@@ -332,7 +332,6 @@ public class GameManager : MonoBehaviour
                 Building b = temp.GetComponent<Building>();
                 if (b == null) b = temp.AddComponent(Building.buildingClassType[bt]) as Building;
                 b.Construct(bt, t, this);
-                _buildings.Add(b);
             }
             
         }
