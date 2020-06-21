@@ -228,7 +228,6 @@ public class GameManager : MonoBehaviour
     //Makes the resource dictionary usable by populating the values and keys
     void PopulateResourceDictionary()
     {
-        _resourcesInWarehouse.Add(ResourceTypes.None, 0);
         _resourcesInWarehouse.Add(ResourceTypes.Fish, 0);
         _resourcesInWarehouse.Add(ResourceTypes.Wood, 0);
         _resourcesInWarehouse.Add(ResourceTypes.Planks, 0);
@@ -237,7 +236,6 @@ public class GameManager : MonoBehaviour
         _resourcesInWarehouse.Add(ResourceTypes.Potato, 0);
         _resourcesInWarehouse.Add(ResourceTypes.Schnapps, 0);
 
-        _salesPrices.Add(ResourceTypes.None, 0);
         _salesPrices.Add(ResourceTypes.Fish, 20f);
         _salesPrices.Add(ResourceTypes.Wood, 10f);
         _salesPrices.Add(ResourceTypes.Planks, 7f);
