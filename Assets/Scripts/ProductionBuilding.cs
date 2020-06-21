@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ProductionBuilding : Building
 {
+    private float _placementEfficiency;
     public float _efficiency;
     public List<Job> _jobs; 
     #region Time
@@ -46,7 +47,7 @@ public class ProductionBuilding : Building
 
     override public void Construct(BuildingTypes bt, Tile t, GameManager gm)
     {
-        _efficiency = 1f;
+        _placementEfficiency = 1f;
         if (ProductionBuilding.neighborsScaleEfficiency.Contains(bt))
         {
             Tile.TileTypes nt = ProductionBuilding.Neighbor_Type[bt];
@@ -54,10 +55,10 @@ public class ProductionBuilding : Building
             int m2 = ProductionBuilding.Neighbor_minmax[bt].Item2;
             int neighborCount = 0;
             foreach (Tile n in t._neighborTiles) if (n._type == nt) neighborCount++;
-            _efficiency = Math.Max(0f, Math.Min(1f, (float)(1 + neighborCount - m1) / (float)(1 + m2 - m1)));//calculates efficiency factor
+            _placementEfficiency = Math.Max(0f, Math.Min(1f, (float)(1 + neighborCount - m1) / (float)(1 + m2 - m1)));//calculates efficiency factor
 
         }
-        waitTime = ProductionBuilding.resourceGeneration[bt] / _efficiency;
+        waitTime = ProductionBuilding.resourceGeneration[bt];
         GM = gm;
         _jobManager = gm.gameObject.GetComponent(typeof(JobManager)) as JobManager;
         _type = bt;
@@ -86,7 +87,8 @@ public class ProductionBuilding : Building
     {
         base.Update();
         UnityEngine.Debug.Assert(_workerCount > 0, "no Workers assigned to this Building", this);
-        if (_workerCount > 0) timer += Time.deltaTime * (_workerCount / Building.workerCapacity[_type]) * _happiness;
+        _efficiency = _placementEfficiency * ((float)_workerCount / (float)Building.workerCapacity[_type]) * _happiness;
+        if (_workerCount > 0) timer += Time.deltaTime*_efficiency;
         if (timer > waitTime)
         {
             timer = timer - waitTime;

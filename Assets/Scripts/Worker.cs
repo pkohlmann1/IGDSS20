@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Worker : MonoBehaviour
@@ -19,7 +20,16 @@ public class Worker : MonoBehaviour
     public static float dyingAge = 100f;
     
     public enum WorkingState { Working,Retired,Child};
-    private WorkingState _state;
+    public WorkingState _state;
+
+    public static Dictionary<GameManager.ResourceTypes, float> consumptionFrames = new Dictionary<GameManager.ResourceTypes, float>() { 
+        {GameManager.ResourceTypes.Fish,60f },
+        {GameManager.ResourceTypes.Schnapps,60f },
+        {GameManager.ResourceTypes.Clothes,60f } };
+    public Dictionary<GameManager.ResourceTypes, float> consumptionTimers = new Dictionary<GameManager.ResourceTypes, float>() { 
+        {GameManager.ResourceTypes.Fish,0f },
+        {GameManager.ResourceTypes.Schnapps,0f },
+        {GameManager.ResourceTypes.Clothes,0f } };
 
     public float _fishConsumption;
     public float _clothConsumption;
@@ -38,9 +48,25 @@ public class Worker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float delta = Time.deltaTime;
+        float consHappy = 0f;
+        foreach (KeyValuePair<GameManager.ResourceTypes, float> entry in consumptionFrames)
+        {
+            if (consumptionTimers[entry.Key] > entry.Value)
+            { 
+                consumptionTimers[entry.Key] += delta; //if resource still in stock, increase timer.
+            }
+            else 
+            {
+                if (_gameManager.sellResource(entry.Key, 0.01f)) consumptionTimers[entry.Key] -= entry.Value;//else try to buy new stock and reset timer if successful.
+            }
+        }
+        foreach (KeyValuePair<GameManager.ResourceTypes, float> entry in consumptionTimers) consHappy += System.Math.Max((entry.Value/consumptionFrames[entry.Key]),0f);
+        consHappy /= consumptionFrames.Count;
+        
         float jobHappy = 0f;
         if (_job != null) jobHappy = 1f;
-        _happiness = jobHappy;
+        _happiness = (jobHappy*0.2f)+(consHappy*0.8f);
     }
 
 
@@ -89,10 +115,4 @@ public class Worker : MonoBehaviour
         _state = WorkingState.Child;
     }
 
-    private void ConsumeRessources()
-    {
-        _gameManager._resourcesInWarehouse[GameManager.ResourceTypes.Fish] -= _fishConsumption;
-        _gameManager._resourcesInWarehouse[GameManager.ResourceTypes.Clothes] -= _clothConsumption;
-        _gameManager._resourcesInWarehouse[GameManager.ResourceTypes.Schnapps] -= _schnappsConsumtpion;
-    }
 }

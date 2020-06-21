@@ -170,6 +170,7 @@ public class GameManager : MonoBehaviour
     #region Resources
     public Dictionary<ResourceTypes, float> _resourcesInWarehouse = new Dictionary<ResourceTypes, float>(); //Holds a number of stored resources for every ResourceType
     public float _money = 20f;
+    public Dictionary<ResourceTypes, float> _salesPrices = new Dictionary<ResourceTypes, float>();
     //A representation of _resourcesInWarehouse, broken into individual floats. Only for display in inspector, will be removed and replaced with UI later
     [SerializeField]
     private float _ResourcesInWarehouse_Fish;
@@ -204,7 +205,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Time.timeScale = 10;
         loadMap(HeightMap);
         PopulateResourceDictionary();
     }
@@ -235,6 +236,15 @@ public class GameManager : MonoBehaviour
         _resourcesInWarehouse.Add(ResourceTypes.Clothes, 0);
         _resourcesInWarehouse.Add(ResourceTypes.Potato, 0);
         _resourcesInWarehouse.Add(ResourceTypes.Schnapps, 0);
+
+        _salesPrices.Add(ResourceTypes.None, 0);
+        _salesPrices.Add(ResourceTypes.Fish, 20f);
+        _salesPrices.Add(ResourceTypes.Wood, 10f);
+        _salesPrices.Add(ResourceTypes.Planks, 7f);
+        _salesPrices.Add(ResourceTypes.Wool, 10f);
+        _salesPrices.Add(ResourceTypes.Clothes, 30f);
+        _salesPrices.Add(ResourceTypes.Potato, 10f);
+        _salesPrices.Add(ResourceTypes.Schnapps, 50f);
     }
 
     //Sets the index for the currently selected building prefab by checking key presses on the numbers 1 to 0
@@ -383,6 +393,18 @@ public class GameManager : MonoBehaviour
     {
         foreach (Building b in _buildings) _money -= Building.upkeep[b._type];
         _money += 100f;
+    }
+
+    public bool sellResource(ResourceTypes r,float amount) 
+    {
+        //UnityEngine.Debug.Assert(_resourcesInWarehouse[r] >= amount, "amount of resource not available for sale.", this);
+        if (_resourcesInWarehouse[r] >= amount)
+        {
+            _resourcesInWarehouse[r] -= amount;
+            _money += _salesPrices[r] * amount;
+            return true;
+        }
+        else return false;
     }
 
     #endregion
