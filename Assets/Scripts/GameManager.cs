@@ -236,13 +236,13 @@ public class GameManager : MonoBehaviour
         _resourcesInWarehouse.Add(ResourceTypes.Potato, 0);
         _resourcesInWarehouse.Add(ResourceTypes.Schnapps, 0);
 
-        _salesPrices.Add(ResourceTypes.Fish, 20f);
-        _salesPrices.Add(ResourceTypes.Wood, 10f);
-        _salesPrices.Add(ResourceTypes.Planks, 7f);
-        _salesPrices.Add(ResourceTypes.Wool, 10f);
-        _salesPrices.Add(ResourceTypes.Clothes, 30f);
-        _salesPrices.Add(ResourceTypes.Potato, 10f);
-        _salesPrices.Add(ResourceTypes.Schnapps, 50f);
+        _salesPrices.Add(ResourceTypes.Fish, 50f);
+        _salesPrices.Add(ResourceTypes.Wood, 20f);
+        _salesPrices.Add(ResourceTypes.Planks, 15f);
+        _salesPrices.Add(ResourceTypes.Wool, 30f);
+        _salesPrices.Add(ResourceTypes.Clothes, 80f);
+        _salesPrices.Add(ResourceTypes.Potato, 20f);
+        _salesPrices.Add(ResourceTypes.Schnapps, 60f);
     }
 
     //Sets the index for the currently selected building prefab by checking key presses on the numbers 1 to 0

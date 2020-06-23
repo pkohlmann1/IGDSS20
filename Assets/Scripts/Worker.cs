@@ -15,9 +15,9 @@ public class Worker : MonoBehaviour
     public float _age; // The age of this worker
     public float _happiness; // The happiness of this worker|| assume value range [0,1]
 
-    public static float workingAge = 14f;
+    public static float workingAge = 12f;
     public static float retiringAge = 64f;
-    public static float dyingAge = 100f;
+    public static float dyingAge = 80f;
     
     public enum WorkingState { Working,Retired,Child};
     public WorkingState _state;
@@ -30,10 +30,6 @@ public class Worker : MonoBehaviour
         {GameManager.ResourceTypes.Fish,0f },
         {GameManager.ResourceTypes.Schnapps,0f },
         {GameManager.ResourceTypes.Clothes,0f } };
-
-    public float _fishConsumption;
-    public float _clothConsumption;
-    public float _schnappsConsumtpion;
 
     // Start is called before the first frame update
     void Start()
@@ -52,16 +48,16 @@ public class Worker : MonoBehaviour
         float consHappy = 0f;
         foreach (KeyValuePair<GameManager.ResourceTypes, float> entry in consumptionFrames)
         {
-            if (consumptionTimers[entry.Key] > entry.Value)
+            if (consumptionTimers[entry.Key] < entry.Value)
             { 
                 consumptionTimers[entry.Key] += delta; //if resource still in stock, increase timer.
             }
             else 
             {
-                if (_gameManager.sellResource(entry.Key, 0.01f)) consumptionTimers[entry.Key] -= entry.Value;//else try to buy new stock and reset timer if successful.
+                if (_gameManager.sellResource(entry.Key, 0.001f)) consumptionTimers[entry.Key] -= entry.Value;//else try to buy new stock and reset timer if successful.
             }
         }
-        foreach (KeyValuePair<GameManager.ResourceTypes, float> entry in consumptionTimers) consHappy += System.Math.Max((entry.Value/consumptionFrames[entry.Key]),0f);
+        foreach (KeyValuePair<GameManager.ResourceTypes, float> entry in consumptionTimers) consHappy += System.Math.Max(1-(entry.Value/consumptionFrames[entry.Key]),0f);
         consHappy /= consumptionFrames.Count;
         
         float jobHappy = 0f;
@@ -77,18 +73,18 @@ public class Worker : MonoBehaviour
         //Eventually, the worker dies and leaves an empty space in his home. His Job occupation is also freed up.
 
        _age += 1;
-        switch (_age) 
+        switch (_state)
         {
-            case float a when a > workingAge && _state == WorkingState.Child:
-                BecomeOfAge();
+            case WorkingState.Child:
+                if(_age>workingAge)BecomeOfAge();
                 break;
-           
-            case float a when a > retiringAge && _state != WorkingState.Retired:
-                Retire();
+
+            case WorkingState.Working:
+                if(_age>retiringAge)Retire();
                 break;
-            
-            case float a when a > dyingAge:
-                Die();
+
+            case WorkingState.Retired:
+                if(_age>dyingAge)Die();
                 break;
 
             default:
@@ -105,6 +101,10 @@ public class Worker : MonoBehaviour
 
     private void Retire()
     {
+        if(_job != null) 
+        {
+            _job.RemoveWorker(this);
+        }
         _jobManager.RemoveWorker(this);
         _state = WorkingState.Retired;
     }

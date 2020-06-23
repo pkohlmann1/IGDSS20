@@ -40,6 +40,7 @@ public class HousingBuilding : Building
             if (!w.gameObject.activeInHierarchy)
             {
                 w._age = 0f;
+                w._state = Worker.WorkingState.Child;
                 w.gameObject.SetActive(true);
                 break;
             }
@@ -54,6 +55,7 @@ public class HousingBuilding : Building
             if (!w.gameObject.activeInHierarchy)
             {
                 w._age = age;
+                w._state = Worker.WorkingState.Child;
                 w.gameObject.SetActive(true);
                 break;
             }

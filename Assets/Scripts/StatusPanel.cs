@@ -9,10 +9,12 @@ public class StatusPanel : MonoBehaviour
     public Text _childPanel;
     public Text _workPanel;
     public Text _retirePanel;
+    public Text _buildingPanel;
     public Text _happyPanel;
     public Text _moneyPanel;
     public Text _resourcePanel;
     public GameManager gm;
+    public JobManager jm;
     void Start()
     {
         _childPanel.text = "0";
@@ -53,11 +55,15 @@ public class StatusPanel : MonoBehaviour
                 }
         }
         float happiness = happycount / (childcount+workcount+retirecount);
+        int unemployment = jm._unoccupiedWorkers.Count;
+        int employed = workcount - unemployment;
+        int openJobs = jm._availableJobs.Count;
         _childPanel.text = childcount.ToString();
-        _workPanel.text = workcount.ToString();
+        _workPanel.text = workcount.ToString()+"("+unemployment.ToString()+ "/" + employed.ToString() +")\t["+openJobs.ToString()+"]" ;
         _retirePanel.text = retirecount.ToString();
         _happyPanel.text = happiness.ToString("0.00");
         _moneyPanel.text = gm._money.ToString("0.00");
+        _buildingPanel.text = gm._selectedBuildingIndex.ToString();
         string resources = "";
         foreach(KeyValuePair<GameManager.ResourceTypes,float> entry in gm._resourcesInWarehouse) 
         {
