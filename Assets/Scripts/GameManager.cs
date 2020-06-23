@@ -390,6 +390,13 @@ public class GameManager : MonoBehaviour
     private void economyTick()
     {
         foreach (Building b in _buildings) _money -= Building.upkeep[b._type];
+        foreach (Building b in _buildings)
+        {
+            if(b is ProductionBuilding)
+            {
+                _money += b._workerCount * 2;
+            }
+        }
         _money += 100f;
     }
 
