@@ -12,6 +12,29 @@ public class Tile : MonoBehaviour
     public int _coordinateWidth; //The coordinate on the x-axis on the tile grid (not world coordinates)
     #endregion
 
+    #region Navigation
+    public static Dictionary<TileTypes, float> traversalTime = new Dictionary<TileTypes, float>() {
+        { TileTypes.Water, 30f },
+        { TileTypes.Sand, 2f },
+        { TileTypes.Grass, 1f },
+        {TileTypes.Forest, 2f}, 
+        {TileTypes.Stone, 1f},
+        {TileTypes.Mountain, 3f} };
+    public Dictionary<Tile, Tile> routeTo;
+    public Dictionary<Tile, float> travelTime;
+
+    public Dictionary<Tile, Tile> n_routeTo = new Dictionary<Tile, Tile>();
+    public Dictionary<Tile, float> n_travelTime = new Dictionary<Tile, float>();
+
+    public void mergeNewRouting() 
+    {
+        foreach (KeyValuePair<Tile, Tile> entry in n_routeTo) routeTo[entry.Key]=entry.Value;
+        foreach (KeyValuePair<Tile, float> entry in n_travelTime) travelTime[entry.Key] = entry.Value;
+        n_routeTo = new Dictionary<Tile, Tile>();
+        n_travelTime = new Dictionary<Tile, float>();
+    }
+    #endregion
+
     #region Enumerations
     public enum TileTypes { Empty, Water, Sand, Grass, Forest, Stone, Mountain }; //Enumeration of all available tile types. Can be addressed from other scripts by calling Tile.Tiletypes
     #endregion

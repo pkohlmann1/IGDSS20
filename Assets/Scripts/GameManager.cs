@@ -38,11 +38,12 @@ public class GameManager : MonoBehaviour
     public GameObject TMountainTile;
     #endregion
 
-    private Tile[,] _tileMap; //2D array of all spawned tiles
+    public Tile[,] _tileMap; //2D array of all spawned tiles
     public Texture2D HeightMap;//2d heightmap, controlls terrain generation
     public readonly float HexDisplace = (float)Math.Sqrt(3) * 0.5f;//constant used to figure out spacing in the corner direction of the Hex tile.
     public readonly float TileRadius = 10f;//span of tile: center to edge
     public float TileMaxHeight = 10f;//maximum displacement Height of Tiles, change to control slope and height of terrain
+    public NavigationManager nm;
     //loads the playfield from the Heightmap, initializes the _tileMap
     void loadMap(Texture2D map)
     {
@@ -208,6 +209,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 10;
         loadMap(HeightMap);
         PopulateResourceDictionary();
+        nm.updateTravelMap();
     }
 
     // Update is called once per frame
