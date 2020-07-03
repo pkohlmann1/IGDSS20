@@ -209,7 +209,6 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 10;
         loadMap(HeightMap);
         PopulateResourceDictionary();
-        nm.updateTravelMap();
     }
 
     // Update is called once per frame
@@ -342,6 +341,7 @@ public class GameManager : MonoBehaviour
                 Building b = temp.GetComponent<Building>();
                 if (b == null) b = temp.AddComponent(Building.buildingClassType[bt]) as Building;
                 b.Construct(bt, t, this);
+                nm.updateTravelMap(t);
             }
             
         }

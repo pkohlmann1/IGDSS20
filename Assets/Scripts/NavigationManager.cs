@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class NavigationManager : MonoBehaviour
 {
@@ -12,83 +14,109 @@ public class NavigationManager : MonoBehaviour
         
     }
 
-    public void updateTravelMap() 
+    public void updateTravelMap(Tile start) 
     {
-        //first empty all navigation maps
+        Debug.Log("Adding new Routes.",this);
+        IEnumerator coroutine = Dijkstra(start);
+        StartCoroutine(coroutine);
+    }
+
+    IEnumerator Dijkstra(Tile start) 
+    {
+        List<Tile> Q = new List<Tile>();
+        Dictionary<Tile, Tile> prev = new Dictionary<Tile, Tile>();
+        Dictionary<Tile, float> dist = new Dictionary<Tile, float>();
         foreach(Tile t in gm._tileMap) 
         {
-            t.travelTime = new Dictionary<Tile, float>() { { t, 0f } };
-            t.routeTo = new Dictionary<Tile, Tile>() { { t, t } };
-            //now that only the self reference remains, enter neighbor tiles into map.
-            foreach(Tile n in t._neighborTiles) 
-            {
-                float tm = (Tile.traversalTime[t._type] + Tile.traversalTime[n._type]) * 0.5f;
-                t.n_routeTo.Add(n, n);
-                t.n_travelTime.Add(n, tm);
-            }
-
+            dist.Add(t, float.PositiveInfinity);
+            prev.Add(t, null);
+            Q.Add(t);
         }
-        Debug.Log("Reset Routing Tables.");
-        StartCoroutine("Relax");
-    }
-
-    IEnumerator Relax() 
-    {
-        int change = 1;
-        while (change > 0) 
+        dist[start] = 0f;
+        yield return null;//this gives the Mic back to the Game Engine
+        while (Q.Any()) 
         {
-            change = 0;
-            foreach(Tile t in gm._tileMap) 
+            Tile point = Q.FirstOrDefault();
+            foreach(Tile t in Q) if (dist[point] > dist[t]) point = t;
+
+            UnityEngine.Debug.Assert(Q.Contains(point),"point not in Q!",this);
+            Q.Remove(point);
+            int count = 0;
+            foreach(Tile neighbor in point._neighborTiles) 
             {
-                //commiting new routes to table
-                t.mergeNewRouting();
-                foreach(KeyValuePair<Tile,Tile> route in t.routeTo)
+                if (Q.Contains(neighbor)) 
                 {
-                    Tile midpoint = route.Key;
-                    Tile startRoute = route.Value;
-                    float midTime = t.travelTime[midpoint];
-                    foreach(KeyValuePair<Tile,float> nRoute in midpoint.n_travelTime) 
+                    float alternate = dist[point] + ((Tile.traversalTime[point._type] + Tile.traversalTime[neighbor._type]) * 0.5f);
+                    if (alternate < dist[neighbor]) 
                     {
-                        Tile endpoint = nRoute.Key;
-                        float routeTime = nRoute.Value + midTime;
-                        if (!(t.n_travelTime.ContainsKey(endpoint)))//is this allready in the new Routes?
-                        {
-                            if (!t.travelTime.ContainsKey(endpoint)) //if not is it in our current Routemap?
-                            { 
-                                change++;
-                                t.n_travelTime.Add(endpoint, routeTime);
-                                t.n_routeTo.Add(endpoint, startRoute);
-                            }
-                            else if (t.travelTime[endpoint] > routeTime)//ok, check if this ones faster.
-                            {
-                                change++;
-                                t.n_travelTime.Add(endpoint, routeTime);
-                                t.n_routeTo.Add(endpoint, startRoute);
-                            }
-                                
-                            
-                        }
-                        else if (t.n_travelTime[endpoint] > routeTime)//ok, check if this ones faster than the other one; you don't need to check Routemap, we've allready found a faster one.
-                        {
-                            t.n_routeTo[endpoint] = startRoute;
-                            t.n_travelTime[endpoint] = routeTime;
-                        }
-                        
+                        dist[neighbor] = alternate;
+                        prev[neighbor] = point;
+                        count++;
                     }
                 }
-                yield return null;//this gives the Mic back to the Game Engine
             }
-            Debug.Log("Updating "+change.ToString()+" Routes.");
-            
+            //Debug.Log("remainding Tiles: " + Q.Count.ToString()+"\tupdates: "+count.ToString(), this);
+            yield return null;//this gives the Mic back to the Game Engine
+        }
+        Debug.Log("Done applying dijkstra. Now generating paths.",this);
+        int deadend = 0;
+        foreach (KeyValuePair<Tile, Tile> entry in prev) if (entry.Value is null) deadend++;
+        Debug.Log(deadend.ToString() + " deadends counted.", this);
+        List<Tile> RoutePoints = gm._buildings.Select(i => i._tile).ToList();
+        RoutePoints.Remove(start);
+        yield return null;//this gives the Mic back to the Game Engine
+        while (RoutePoints.Any()) 
+        {
+            Tile u = RoutePoints.First();
+            List<Tile> path = getPath(start, u, prev);
+            Queue<Tile> ToPath = new Queue<Tile>(path);
+            path.Reverse();
+            Queue<Tile> FromPath = new Queue<Tile>(path);
+            enterPath(ToPath,u);
+            enterPath(FromPath, start);
+            yield return null;//this gives the Mic back to the Game Engine
+        }
+        Debug.Log("Paths generated. Applying updates to routing tables.",this);
+        foreach(Tile t in gm._tileMap) 
+        {
+            t.mergeNewRouting();
+            yield return null;//this gives the Mic back to the Game Engine
+        }
+        Debug.Log("Routing tables successfully updated.",this);
+    }
+
+    private List<Tile> getPath(Tile start, Tile goal,Dictionary<Tile,Tile> prev) 
+    {
+        List<Tile> Weg = new List<Tile>();
+        Weg.Add(start);
+        Tile u = start;
+        while (prev[u] != null) 
+        {
+            u = prev[u];
+            Weg.Add(u);
+        }
+        UnityEngine.Debug.Assert(u!=goal,"No path to tile found! (stuck in a dead end)",this);
+        return Weg;
+    }
+
+    private void enterPath(Queue<Tile> path,Tile end) 
+    {
+        Tile n = path.Dequeue();
+        Tile o;
+
+        while (path.Any()) 
+        {
+            o = n;
+            n = path.Dequeue();
+            if (!o.n_routeTo.ContainsKey(end))
+            { 
+                o.n_routeTo.Add(end, n);//add route to next tile in path 
+            }
+            if(!o.n_travelTime.ContainsKey(n))
+            {
+                o.n_travelTime.Add(n, 0.5f * (Tile.traversalTime[o._type] + Tile.traversalTime[n._type]));//Add traveltime to neighbor tile
+
+            }
         }
     }
-}
-
-public class Route : ScriptableObject 
-{
-    Tile start;
-    Tile next;
-    Route cont;
-    Tile end;
-    float travelTime;
 }
