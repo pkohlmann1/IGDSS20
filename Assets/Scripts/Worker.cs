@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.Collections;
 
 public class Worker : MonoBehaviour
 {
@@ -18,9 +19,10 @@ public class Worker : MonoBehaviour
     public static float workingAge = 12f;
     public static float retiringAge = 64f;
     public static float dyingAge = 80f;
-    
-    public enum WorkingState { Working,Retired,Child};
+
+    public enum WorkingState { Working, Retired, Child };
     public WorkingState _state;
+
 
     public static Dictionary<GameManager.ResourceTypes, float> consumptionFrames = new Dictionary<GameManager.ResourceTypes, float>() { 
         {GameManager.ResourceTypes.Fish,60f },
@@ -37,7 +39,7 @@ public class Worker : MonoBehaviour
         _state = WorkingState.Child;
         _gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         _jobManager = GameObject.FindWithTag("GameManager").GetComponent<JobManager>();
-        InvokeRepeating("Age", 15.0f, 15.0f);
+        InvokeRepeating("Age", 30.0f, 15.0f);
         //InvokeRepeating("ConsumeRessources", 60.0f, 60.0f);
     }
 
@@ -114,5 +116,6 @@ public class Worker : MonoBehaviour
         this.gameObject.SetActive(false);
         _state = WorkingState.Child;
     }
+
 
 }
