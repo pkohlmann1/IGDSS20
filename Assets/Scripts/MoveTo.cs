@@ -10,21 +10,23 @@ public class MoveTo : MonoBehaviour
     private int destPoint = 0;
     private NavMeshAgent agent;
     private Worker worker;
+    private Animator animator;
 
     bool isMoving = false;
+    bool atWork = false;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         worker = GetComponent<Worker>();
+        animator = GetComponent<Animator>();
 
         // Disabling auto-braking allows for continuous movement
         // between points (ie, the agent doesn't slow down as it
         // approaches a destination point).
         agent.autoBraking = false;
 
-        GotoNextPoint();
-        InvokeRepeating("Move", 0.0f, 60.0f);
+        InvokeRepeating("Move", 10.0f, 75.0f);
     }
 
 
@@ -57,25 +59,30 @@ public class MoveTo : MonoBehaviour
             }
         // Choose the next destination point when the agent gets
         // close to the current one.
-       // if (!agent.pathPending && agent.remainingDistance < 0.5f)
-         //   StartCoroutine(ExampleCoroutine());
-
-    }
-
-    IEnumerator ExampleCoroutine()
-    {
-
-
-        //yield on a new YieldInstruction that waits for 5 seconds.
-        yield return new WaitForSeconds(60);
-
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
-            GotoNextPoint();
+        {
+            animator.enabled = false;
+        }
 
     }
+
 
     void Move()
     {
-        StartCoroutine(ExampleCoroutine());
+        if (isMoving)
+        {
+            if (!atWork)
+            {
+                agent.destination = worker._job._building.transform.position;
+                atWork = true;
+            }
+            else
+            {
+                agent.destination = worker._house.transform.position;
+                atWork = false;
+            }
+            animator.enabled = true;
+        }
+
     }
 }
