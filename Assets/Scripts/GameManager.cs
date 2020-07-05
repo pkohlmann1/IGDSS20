@@ -202,6 +202,9 @@ public class GameManager : MonoBehaviour
     public GameObject WorkerModel;
     #endregion
 
+    #region Dev Flags
+    public bool dev_ViewPaths = true;
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -314,13 +317,29 @@ public class GameManager : MonoBehaviour
     public void TileClicked(int height, int width)
     {
         Tile t = _tileMap[width,height];
-        try
-        { PlaceBuildingOnTile(t); }
-        catch(Exception e)
+        if (_selectedBuildingIndex == Building.BuildingTypes.Empty)
         {
-            UnityEngine.Debug.LogException(e, this);
+            SelectTile(t);
+        }
+        else
+        {
+            try
+            { PlaceBuildingOnTile(t); }
+            catch (Exception e)
+            {
+                UnityEngine.Debug.LogException(e, this);
+            }
         }
         
+    }
+
+    private void SelectTile(Tile t)
+    {
+        t.showInfo();
+        if (dev_ViewPaths) 
+        {
+            
+        }
     }
 
     //Checks if the currently selected building type can be placed on the given tile and then instantiates an instance of the prefab
