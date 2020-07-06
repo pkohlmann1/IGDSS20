@@ -209,7 +209,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 10;
+        Time.timeScale = 2;
         loadMap(HeightMap);
         PopulateResourceDictionary();
     }
@@ -338,7 +338,14 @@ public class GameManager : MonoBehaviour
         t.showInfo();
         if (dev_ViewPaths) 
         {
-            
+            String txt = t._coordinateHeight.ToString() + "," + t._coordinateWidth.ToString();
+            UnityEngine.Debug.Log(txt+" Routing Table contains "+t.routeTo.Count.ToString()+" entries:", t);
+            foreach (KeyValuePair<Tile, Tile> entry in t.routeTo)
+            {
+                txt = entry.Key._coordinateHeight.ToString() + "," + entry.Key._coordinateWidth.ToString();
+                txt += "\t" + entry.Value._coordinateHeight.ToString() + "," + entry.Value._coordinateWidth.ToString();
+                UnityEngine.Debug.Log(txt, t);
+            }
         }
     }
 

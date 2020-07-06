@@ -86,7 +86,7 @@ public class ProductionBuilding : Building
     new void Update()
     {
         base.Update();
-        UnityEngine.Debug.Assert(_workerCount > 0, "no Workers assigned to this Building", this);
+        //UnityEngine.Debug.Assert(_workerCount > 0, "no Workers assigned to this Building", this);
         _efficiency = _placementEfficiency * ((float)_workerCount / (float)Building.workerCapacity[_type]) * _happiness;
         if (_workerCount > 0) timer += Time.deltaTime*_efficiency;
         if (timer > waitTime)

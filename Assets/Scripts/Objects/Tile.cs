@@ -20,8 +20,8 @@ public class Tile : MonoBehaviour
         {TileTypes.Forest, 2f}, 
         {TileTypes.Stone, 1f},
         {TileTypes.Mountain, 3f} };
-    public Dictionary<Tile, Tile> routeTo;
-    public Dictionary<Tile, float> travelTime;
+    public Dictionary<Tile, Tile> routeTo = new Dictionary<Tile, Tile>();
+    public Dictionary<Tile, float> travelTime = new Dictionary<Tile, float>();
 
     public Dictionary<Tile, Tile> n_routeTo = new Dictionary<Tile, Tile>();
     public Dictionary<Tile, float> n_travelTime = new Dictionary<Tile, float>();

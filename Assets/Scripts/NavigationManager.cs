@@ -58,44 +58,50 @@ public class NavigationManager : MonoBehaviour
             //Debug.Log("remainding Tiles: " + Q.Count.ToString()+"\tupdates: "+count.ToString(), this);
             yield return null;//this gives the Mic back to the Game Engine
         }
-        Debug.Log("Done applying dijkstra. Now generating paths.",this);
         int deadend = 0;
         foreach (KeyValuePair<Tile, Tile> entry in prev) if (entry.Value is null) deadend++;
-        Debug.Log(deadend.ToString() + " deadends counted.", this);
+        
         List<Tile> RoutePoints = gm._buildings.Select(i => i._tile).ToList();
         RoutePoints.Remove(start);
+        Debug.Log("Done applying dijkstra. Now generating "+RoutePoints.Count.ToString()+" paths.\t" + deadend.ToString() + " deadends counted.", this);
         yield return null;//this gives the Mic back to the Game Engine
+        int countPaths = 0;
         while (RoutePoints.Any()) 
         {
             Tile u = RoutePoints.First();
+            RoutePoints.Remove(u);
             List<Tile> path = getPath(start, u, prev);
+            Debug.Log("from: "+start._building.ToString()+"\t to:"+u._building.ToString()+"\tpath length: "+path.Count.ToString(),this);
             Queue<Tile> ToPath = new Queue<Tile>(path);
             path.Reverse();
             Queue<Tile> FromPath = new Queue<Tile>(path);
-            enterPath(ToPath,u);
-            enterPath(FromPath, start);
+            enterPath(ToPath,start);
+            enterPath(FromPath, u);
+            countPaths += 2;
             yield return null;//this gives the Mic back to the Game Engine
         }
-        Debug.Log("Paths generated. Applying updates to routing tables.",this);
+        Debug.Log(countPaths.ToString()+" Paths generated. Applying updates to routing tables.",this);
+        int updateCount = 0;
         foreach(Tile t in gm._tileMap) 
         {
+            updateCount += t.n_routeTo.Count;
             t.mergeNewRouting();
             yield return null;//this gives the Mic back to the Game Engine
         }
-        Debug.Log("Routing tables successfully updated.",this);
+        Debug.Log(updateCount.ToString()+" Routing table Entries successfully updated.",this);
     }
 
     private List<Tile> getPath(Tile start, Tile goal,Dictionary<Tile,Tile> prev) 
     {
         List<Tile> Weg = new List<Tile>();
-        Weg.Add(start);
-        Tile u = start;
+        Weg.Add(goal);
+        Tile u = goal;
         while (prev[u] != null) 
         {
             u = prev[u];
             Weg.Add(u);
         }
-        UnityEngine.Debug.Assert(u!=goal,"No path to tile found! (stuck in a dead end)",this);
+        UnityEngine.Debug.Assert(u!=start,"No path to tile found! (stuck in a dead end)",this);
         return Weg;
     }
 
@@ -103,20 +109,22 @@ public class NavigationManager : MonoBehaviour
     {
         Tile n = path.Dequeue();
         Tile o;
-
-        while (path.Any()) 
+        int pathSteps = 0;
+        while (path.Count>0) 
         {
             o = n;
             n = path.Dequeue();
-            if (!o.n_routeTo.ContainsKey(end))
+            pathSteps++;
+            if (!(o.n_routeTo.ContainsKey(end)))
             { 
                 o.n_routeTo.Add(end, n);//add route to next tile in path 
             }
-            if(!o.n_travelTime.ContainsKey(n))
+            if(!(o.n_travelTime.ContainsKey(n)))
             {
                 o.n_travelTime.Add(n, 0.5f * (Tile.traversalTime[o._type] + Tile.traversalTime[n._type]));//Add traveltime to neighbor tile
 
             }
         }
+        Debug.Log(pathSteps.ToString()+" step path added.",this);
     }
 }
