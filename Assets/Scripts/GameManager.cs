@@ -12,6 +12,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Tilemaps;
 using UnityEngine.U2D;
 using Random = UnityEngine.Random;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -417,13 +418,24 @@ public class GameManager : MonoBehaviour
 
     private void economyTick()
     {
+        int totalWorkerCount = 0;
         foreach (Building b in _buildings) _money -= Building.upkeep[b._type];
         foreach (Building b in _buildings)
         {
             if(b is ProductionBuilding)
             {
+                totalWorkerCount += b._workerCount;
                 _money += b._workerCount * 2;
             }
+        }
+        if (_money == 1000000 || totalWorkerCount >= 1000)
+        {
+            WinGame();
+        }
+        if (_money <= 0)
+        {
+            UnityEngine.Debug.Log("ii");
+            LoseGame();
         }
         _money += 100f;
     }
@@ -441,6 +453,28 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+
+    public void WinGame()
+    {
+        SceneManager.LoadScene("WinScreen");
+    }
+
+
+    public void LoseGame()
+    {
+        UnityEngine.Debug.Log("hiiiii");
+        SceneManager.LoadScene("GameOver");
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene("Map");
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 
 
 
