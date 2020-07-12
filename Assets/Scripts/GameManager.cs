@@ -11,6 +11,7 @@ using UnityEngine.Assertions;
 using UnityEngine.Rendering;
 using UnityEngine.Tilemaps;
 using UnityEngine.U2D;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
@@ -291,6 +292,20 @@ public class GameManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Empty;
+        }
+    }
+
+    public void handleBuildingSelectInput(Dropdown change) 
+    {
+        string selection = change.options[change.value].text;
+        UnityEngine.Debug.Log("selected: "+selection);
+        foreach(Building.BuildingTypes t in Enum.GetValues(typeof(Building.BuildingTypes))) 
+        {
+
+            if(selection == t.ToString()) 
+            {
+                _selectedBuildingIndex = t;
+            }
         }
     }
 
