@@ -11,6 +11,7 @@ using UnityEngine.Assertions;
 using UnityEngine.Rendering;
 using UnityEngine.Tilemaps;
 using UnityEngine.U2D;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 using UnityEngine.SceneManagement;
 
@@ -167,6 +168,12 @@ public class GameManager : MonoBehaviour
     public BuildingAssets _buildingPrefabs;
     public Building.BuildingTypes _selectedBuildingIndex = Building.BuildingTypes.Empty; //The current index used for choosing a prefab to spawn from the _buildingPrefabs list
     public List<Building> _buildings = new List<Building>();
+    public BuildingSelectPanel selectPanel;
+    void changeBuildingSelection(Building.BuildingTypes change) 
+    {
+        _selectedBuildingIndex = change;
+        selectPanel.changeTo(change);
+    }
     #endregion
 
     #region Resources
@@ -255,43 +262,62 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Fishery;
+            changeBuildingSelection( ProductionBuilding.BuildingTypes.Fishery);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Lumberjack;
+            changeBuildingSelection( ProductionBuilding.BuildingTypes.Lumberjack);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Sawmill;
+            changeBuildingSelection( ProductionBuilding.BuildingTypes.Sawmill);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Potato_Farm;
+            changeBuildingSelection( ProductionBuilding.BuildingTypes.Potato_Farm);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Schnapps_Distillery;
+            changeBuildingSelection( ProductionBuilding.BuildingTypes.Schnapps_Distillery);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha6))
         {
-            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Sheep_Farm;
+            changeBuildingSelection( ProductionBuilding.BuildingTypes.Sheep_Farm);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha7))
         {
-            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Framework_Knitters;
+            changeBuildingSelection( ProductionBuilding.BuildingTypes.Framework_Knitters);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha8))
         {
-            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Farm_House;
+            changeBuildingSelection( ProductionBuilding.BuildingTypes.Farm_House);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha9))
         {
-            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Empty;
+            changeBuildingSelection( ProductionBuilding.BuildingTypes.Empty);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha0))
         {
-            _selectedBuildingIndex = ProductionBuilding.BuildingTypes.Empty;
+            changeBuildingSelection( ProductionBuilding.BuildingTypes.Empty);
+        }
+        else if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            changeBuildingSelection(ProductionBuilding.BuildingTypes.Empty);
+        }
+
+    }
+
+    public void handleBuildingSelectInput(Dropdown change) 
+    {
+        string selection = change.options[change.value].text;
+        UnityEngine.Debug.Log("selected: "+selection);
+        foreach(Building.BuildingTypes t in Enum.GetValues(typeof(Building.BuildingTypes))) 
+        {
+
+            if(selection == t.ToString()) 
+            {
+                changeBuildingSelection(t);
+            }
         }
     }
 
@@ -357,7 +383,7 @@ public class GameManager : MonoBehaviour
         if (_selectedBuildingIndex != Building.BuildingTypes.Empty)
         {
             Building.BuildingTypes bt = _selectedBuildingIndex;
-            _selectedBuildingIndex = Building.BuildingTypes.Empty;
+            changeBuildingSelection(ProductionBuilding.BuildingTypes.Empty);
             GameObject selectedBuilding = _buildingPrefabs.Dict[bt];
 
             if (Building.Constructable(bt,t,this)) 
