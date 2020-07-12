@@ -16,6 +16,7 @@ public class BuildingSelectPanel : MonoBehaviour
         {
             Dropdown.OptionData option = new Dropdown.OptionData();
             option.text = entry.bt.ToString();
+            option.image = entry.icon;
             options.Add(option);
         }
         BuildingMenu.AddOptions(options);

@@ -11,6 +11,7 @@ public class BuildingAssets : ScriptableObject
     {
         public ProductionBuilding.BuildingTypes bt;
         public GameObject asset;
+        public Sprite icon;
     }
 
     void OnEnable()

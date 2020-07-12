@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BuildingAssets/BuildingAsset
   bt: 2
   asset: {fileID: 3215915157544939247, guid: ed5ac5eace5b71942b16267b0ccf4050, type: 3}
+  icon: {fileID: 3576638945478130457, guid: 5a628324d6f7267449bee997f177e7a7, type: 3}

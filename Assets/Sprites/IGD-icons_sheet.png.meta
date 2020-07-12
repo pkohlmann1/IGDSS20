@@ -1,0 +1,620 @@
+fileFormatVersion: 2
+guid: 5a628324d6f7267449bee997f177e7a7
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5267065512105064001
+    second: Tile-Icon_water
+  - first:
+      213: 8902825751618184512
+    second: Tile-Icon_sand
+  - first:
+      213: -500239266136933575
+    second: Tile-Icon_grass
+  - first:
+      213: 6471562391418016914
+    second: Tile-Icon_forest
+  - first:
+      213: -2703580762614528823
+    second: Tile-Icon_stone
+  - first:
+      213: 7635099642010255564
+    second: Tile-Icon_mountain
+  - first:
+      213: -4307471566057277895
+    second: Building-Icon_farm_house
+  - first:
+      213: -5105885746691191668
+    second: Resource-Icon_wood
+  - first:
+      213: 4136046853033246549
+    second: Resource-Icon_plank
+  - first:
+      213: 8904249659051834966
+    second: Resource-Icon_fish
+  - first:
+      213: 8388461149776617771
+    second: Resource-Icon_wool
+  - first:
+      213: -5670496242041266636
+    second: Resource-Icon_cloth
+  - first:
+      213: -5132654032591348601
+    second: Resource-Icon_potato
+  - first:
+      213: 102445856003562006
+    second: Resource-Icon_schnapps
+  - first:
+      213: 3576638945478130457
+    second: Building-Icon_wood_chopper
+  - first:
+      213: -8704574087929072138
+    second: Building-Icon_sawmill
+  - first:
+      213: -5755832672787113866
+    second: Building-Icon_fishery
+  - first:
+      213: -7464788379438671712
+    second: Building-Icon_sheep_farm
+  - first:
+      213: 2199030955759720194
+    second: Building-Icon_framework_knitter
+  - first:
+      213: -637700847697056166
+    second: Building-Icon_potato_farm
+  - first:
+      213: -4947639337968115068
+    second: Building-Icon_distillery
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Tile-Icon_water
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 114.66667
+        width: 57.142857
+        height: 57.333332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb94446a2df97e6b0800000000000000
+      internalID: -5267065512105064001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tile-Icon_sand
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 114.66667
+        width: 57.142857
+        height: 57.333332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 045e6661ad03d8b70800000000000000
+      internalID: 8902825751618184512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tile-Icon_grass
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 114.66667
+        width: 57.142857
+        height: 57.333332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93bb43fa90bce09f0800000000000000
+      internalID: -500239266136933575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tile-Icon_forest
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 114.66667
+        width: 57.142857
+        height: 57.333332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2949f3a05bb9fc950800000000000000
+      internalID: 6471562391418016914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tile-Icon_stone
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 114.66667
+        width: 57.142857
+        height: 57.333332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c408cede93fa7ad0800000000000000
+      internalID: -2703580762614528823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tile-Icon_mountain
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 114.66667
+        width: 57.142857
+        height: 57.333332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc0cbb20ca255f960800000000000000
+      internalID: 7635099642010255564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Building-Icon_farm_house
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 114.66667
+        width: 57.142857
+        height: 57.333332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9367f01ce69c834c0800000000000000
+      internalID: -4307471566057277895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Resource-Icon_wood
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 57.666668
+        width: 57.142857
+        height: 57.333332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8ccdbc27ff3429b0800000000000000
+      internalID: -5105885746691191668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Resource-Icon_plank
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 57.666668
+        width: 57.142857
+        height: 57.333332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55f3b69f2b0366930800000000000000
+      internalID: 4136046853033246549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Resource-Icon_fish
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 57.666668
+        width: 57.142857
+        height: 57.333332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65e7d2f53ef329b70800000000000000
+      internalID: 8904249659051834966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Resource-Icon_wool
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 57.666668
+        width: 57.142857
+        height: 57.333332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b21a994c8fcc96470800000000000000
+      internalID: 8388461149776617771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Resource-Icon_cloth
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 57.666668
+        width: 57.142857
+        height: 57.333332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43e51f026b95e41b0800000000000000
+      internalID: -5670496242041266636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Resource-Icon_potato
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 57.666668
+        width: 57.142857
+        height: 57.333332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78c9a60f95625c8b0800000000000000
+      internalID: -5132654032591348601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Resource-Icon_schnapps
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 57.666668
+        width: 57.142857
+        height: 57.333332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61a9dc796f5fb6100800000000000000
+      internalID: 102445856003562006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Building-Icon_wood_chopper
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0.66666794
+        width: 57.142857
+        height: 57.333332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91b3d0bcb26c2a130800000000000000
+      internalID: 3576638945478130457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Building-Icon_sawmill
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 0.66666794
+        width: 57.142857
+        height: 57.333332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f5faef5cf3233780800000000000000
+      internalID: -8704574087929072138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Building-Icon_fishery
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 0.66666794
+        width: 57.142857
+        height: 57.333332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 678dfe70eac2f10b0800000000000000
+      internalID: -5755832672787113866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Building-Icon_sheep_farm
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 0.66666794
+        width: 57.142857
+        height: 57.333332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a81810e48eb76890800000000000000
+      internalID: -7464788379438671712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Building-Icon_framework_knitter
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 0.66666794
+        width: 57.142857
+        height: 57.333332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2075528d007848e10800000000000000
+      internalID: 2199030955759720194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Building-Icon_potato_farm
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 0.66666794
+        width: 57.142857
+        height: 57.333332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5e2d0c257e6627f0800000000000000
+      internalID: -637700847697056166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Building-Icon_distillery
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 0.66666794
+        width: 57.142857
+        height: 57.333332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48269af5c34765bb0800000000000000
+      internalID: -4947639337968115068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 38ad3d7083bba6046b54888b075e41db
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
