@@ -460,7 +460,6 @@ public class GameManager : MonoBehaviour
         }
         if (_money <= 0)
         {
-            UnityEngine.Debug.Log("ii");
             LoseGame();
         }
         _money += 100f;
@@ -488,7 +487,6 @@ public class GameManager : MonoBehaviour
 
     public void LoseGame()
     {
-        UnityEngine.Debug.Log("hiiiii");
         SceneManager.LoadScene("GameOver");
     }
 
