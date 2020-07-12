@@ -4,6 +4,7 @@
     "com.unity.collab-proxy": "1.2.16",
     "com.unity.ide.rider": "1.1.4",
     "com.unity.ide.vscode": "1.1.4",
+    "com.unity.postprocessing": "https://github.com/Unity-Technologies/PostProcessing.git",
     "com.unity.test-framework": "1.1.13",
     "com.unity.textmeshpro": "2.0.1",
     "com.unity.timeline": "1.2.14",
@@ -39,5 +40,11 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
+  },
+  "lock": {
+    "com.unity.postprocessing": {
+      "revision": "HEAD",
+      "hash": "33c409880402b7564aed289a9f86e39a5cdf5861"
+    }
   }
 }
