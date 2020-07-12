@@ -11,23 +11,35 @@ public class BuildingSelectPanel : MonoBehaviour
     void Start()
     {
         BuildingMenu.options.Clear();
+        Dropdown.OptionData opt = new Dropdown.OptionData();
+        opt.text = Building.BuildingTypes.Empty.ToString();
+        BuildingMenu.options.Add(opt);
 
-        foreach(BuildingAssets.BuildingAsset entry in gm._buildingPrefabs.BuildingAssetEntries) 
+        foreach (BuildingAssets.BuildingAsset entry in gm._buildingPrefabs.BuildingAssetEntries) 
         {
             Dropdown.OptionData option = new Dropdown.OptionData();
             option.text = entry.bt.ToString();
             option.image = entry.icon;
             BuildingMenu.options.Add(option);
         }
-        Dropdown.OptionData opt = new Dropdown.OptionData();
-        opt.text = Building.BuildingTypes.Empty.ToString();
-        BuildingMenu.options.Add(opt);
 
         BuildingMenu.onValueChanged.AddListener(delegate { gm.handleBuildingSelectInput(BuildingMenu); });
         BuildingMenu.RefreshShownValue();
         
     }
 
+    public void changeTo(Building.BuildingTypes change) 
+    {
+        List<Dropdown.OptionData> options = BuildingMenu.options;
+        for(int i=0; i < options.Count; i++) 
+        {
+            if (options[i].text == change.ToString()) 
+            {
+                BuildingMenu.value = i;
+            }
+        }
+        
+    }
     // Update is called once per frame
     void Update()
     {

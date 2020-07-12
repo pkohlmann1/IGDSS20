@@ -1791,6 +1791,7 @@ MonoBehaviour:
   _buildingPrefabs: {fileID: 11400000, guid: 92cc135653563224097d8db519aa68b1, type: 2}
   _selectedBuildingIndex: 0
   _buildings: []
+  selectPanel: {fileID: 1017101043}
   _money: 2000
   _ResourcesInWarehouse_Fish: 0
   _ResourcesInWarehouse_Wood: 0
