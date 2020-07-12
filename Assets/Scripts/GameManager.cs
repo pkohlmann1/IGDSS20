@@ -454,7 +454,7 @@ public class GameManager : MonoBehaviour
                 _money += b._workerCount * 2;
             }
         }
-        if (_money == 1000000 || totalWorkerCount >= 1000)
+        if (_money >= 1000000 || totalWorkerCount >= 1000)
         {
             WinGame();
         }
